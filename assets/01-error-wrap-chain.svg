@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" width="800" height="360" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Error wrap chain walked by errors.Is</title>
+  <rect width="800" height="360" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <text x="30" y="30" font-weight="bold">errors.Is(err, ErrNotFound) walks the chain with Unwrap</text>
+  <rect x="30" y="50" width="340" height="56" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="200" y="74" text-anchor="middle" font-weight="bold">err (outer)</text>
+  <text x="200" y="94" text-anchor="middle">Errorf("load profile: %w", e2)</text>
+  <rect x="30" y="148" width="340" height="56" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="200" y="172" text-anchor="middle" font-weight="bold">e2 (wrapped)</text>
+  <text x="200" y="192" text-anchor="middle">Errorf("get user 7: %w", ErrNotFound)</text>
+  <rect x="30" y="246" width="340" height="56" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="200" y="270" text-anchor="middle" font-weight="bold">ErrNotFound (sentinel)</text>
+  <text x="200" y="290" text-anchor="middle">errors.New("not found")</text>
+  <path d="M200,106 L200,146" fill="none" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="212" y="131">Unwrap</text>
+  <path d="M200,204 L200,244" fill="none" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="212" y="229">Unwrap</text>
+  <path d="M370,78 L450,78" fill="none" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="455" y="55" width="315" height="46" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="612" y="83" text-anchor="middle">equal to ErrNotFound? no</text>
+  <path d="M370,176 L450,176" fill="none" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="455" y="153" width="315" height="46" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="612" y="181" text-anchor="middle">equal to ErrNotFound? no</text>
+  <path d="M370,274 L450,274" fill="none" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="455" y="251" width="315" height="46" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="612" y="279" text-anchor="middle">equal? yes, Is returns true</text>
+  <text x="30" y="335">%w keeps the link. With %v the chain stops at that error and Is returns false.</text>
+</svg>

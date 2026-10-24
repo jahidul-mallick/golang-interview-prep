@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" width="800" height="440" font-family="Arial, Helvetica, sans-serif" fill="#1B1F24">
+  <title>Sliding window: expand right, shrink left, every element enters and leaves once</title>
+  <rect x="0" y="0" width="800" height="440" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="30" font-size="18" font-weight="bold" text-anchor="middle">Sliding window: shortest subarray with sum &gt;= 7</text>
+
+  <!-- row 1: window [0..3], sum 8, valid -->
+  <text x="30" y="82" font-size="15" font-weight="bold">1. Expand right</text>
+  <text x="30" y="102" font-size="14">window 2+3+1+2 = 8 &gt;= 7</text>
+  <text x="30" y="122" font-size="14">valid, length 4</text>
+  <rect x="300" y="65" width="64" height="44" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <rect x="370" y="65" width="64" height="44" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <rect x="440" y="65" width="64" height="44" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <rect x="510" y="65" width="64" height="44" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <rect x="580" y="65" width="64" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <rect x="650" y="65" width="64" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <g font-size="20" text-anchor="middle">
+    <text x="332" y="94">2</text><text x="402" y="94">3</text><text x="472" y="94">1</text>
+    <text x="542" y="94">2</text><text x="612" y="94">4</text><text x="682" y="94">3</text>
+  </g>
+  <text x="332" y="132" font-size="14" font-weight="bold" text-anchor="middle">left</text>
+  <text x="542" y="132" font-size="14" font-weight="bold" text-anchor="middle">right</text>
+
+  <line x1="400" y1="148" x2="400" y2="168" stroke="#555555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- row 2: window [1..3], sum 6, invalid -->
+  <text x="30" y="212" font-size="15" font-weight="bold">2. Shrink left</text>
+  <text x="30" y="232" font-size="14">window 3+1+2 = 6 &lt; 7</text>
+  <text x="30" y="252" font-size="14">invalid, stop shrinking</text>
+  <rect x="300" y="195" width="64" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <rect x="370" y="195" width="64" height="44" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <rect x="440" y="195" width="64" height="44" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <rect x="510" y="195" width="64" height="44" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <rect x="580" y="195" width="64" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <rect x="650" y="195" width="64" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <g font-size="20" text-anchor="middle">
+    <text x="332" y="224">2</text><text x="402" y="224">3</text><text x="472" y="224">1</text>
+    <text x="542" y="224">2</text><text x="612" y="224">4</text><text x="682" y="224">3</text>
+  </g>
+  <text x="402" y="262" font-size="14" font-weight="bold" text-anchor="middle">left</text>
+  <text x="542" y="262" font-size="14" font-weight="bold" text-anchor="middle">right</text>
+
+  <line x1="400" y1="278" x2="400" y2="298" stroke="#555555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- row 3: window [1..4], sum 10, valid -->
+  <text x="30" y="342" font-size="15" font-weight="bold">3. Expand right again</text>
+  <text x="30" y="362" font-size="14">window 3+1+2+4 = 10 &gt;= 7</text>
+  <text x="30" y="382" font-size="14">valid, then shrink again</text>
+  <rect x="300" y="325" width="64" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <rect x="370" y="325" width="64" height="44" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <rect x="440" y="325" width="64" height="44" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <rect x="510" y="325" width="64" height="44" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <rect x="580" y="325" width="64" height="44" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <rect x="650" y="325" width="64" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <g font-size="20" text-anchor="middle">
+    <text x="332" y="354">2</text><text x="402" y="354">3</text><text x="472" y="354">1</text>
+    <text x="542" y="354">2</text><text x="612" y="354">4</text><text x="682" y="354">3</text>
+  </g>
+  <text x="402" y="392" font-size="14" font-weight="bold" text-anchor="middle">left</text>
+  <text x="612" y="392" font-size="14" font-weight="bold" text-anchor="middle">right</text>
+
+  <text x="400" y="426" font-size="15" text-anchor="middle">Each index enters once and leaves once: O(n), even with the inner loop.</text>
+</svg>

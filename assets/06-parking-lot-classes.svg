@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 430" width="800" height="430" font-family="Arial, Helvetica, sans-serif" fill="#1B1F24">
+  <title>Parking lot class diagram: ParkingLot, Slot, Ticket, Vehicle, Pricing</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="430" fill="#FFFFFF"/>
+  <text x="16" y="30" font-size="16" font-weight="bold">Parking lot: entities and how they relate</text>
+
+  <rect x="300" y="50" width="200" height="90" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="400" y="74" font-size="15" font-weight="bold" text-anchor="middle">ParkingLot</text>
+  <text x="400" y="95" font-size="13" text-anchor="middle">Park(vehicle) Ticket</text>
+  <text x="400" y="113" font-size="13" text-anchor="middle">Unpark(id) fee</text>
+  <text x="400" y="131" font-size="13" text-anchor="middle">mutex guards state</text>
+
+  <rect x="40" y="210" width="180" height="80" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="130" y="238" font-size="15" font-weight="bold" text-anchor="middle">Slot</text>
+  <text x="130" y="262" font-size="13" text-anchor="middle">ID, Size, used</text>
+
+  <rect x="310" y="210" width="180" height="80" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="400" y="238" font-size="15" font-weight="bold" text-anchor="middle">Ticket</text>
+  <text x="400" y="262" font-size="13" text-anchor="middle">ID, Entry time</text>
+
+  <rect x="310" y="340" width="180" height="70" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="400" y="368" font-size="15" font-weight="bold" text-anchor="middle">Vehicle</text>
+  <text x="400" y="392" font-size="13" text-anchor="middle">Plate, Size</text>
+
+  <rect x="580" y="50" width="190" height="70" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="675" y="76" font-size="15" font-weight="bold" text-anchor="middle">Pricing (interface)</text>
+  <text x="675" y="100" font-size="13" text-anchor="middle">Fee(size, duration)</text>
+
+  <rect x="580" y="210" width="190" height="70" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="675" y="236" font-size="15" font-weight="bold" text-anchor="middle">HourlyPricing</text>
+  <text x="675" y="260" font-size="13" text-anchor="middle">rate per size per hour</text>
+
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="330" y1="140" x2="140" y2="208"/>
+    <line x1="400" y1="140" x2="400" y2="208"/>
+    <line x1="500" y1="85" x2="578" y2="85"/>
+    <line x1="675" y1="210" x2="675" y2="122"/>
+    <line x1="310" y1="250" x2="222" y2="250"/>
+    <line x1="400" y1="290" x2="400" y2="338"/>
+  </g>
+  <text x="150" y="172" font-size="13" text-anchor="middle">has many</text>
+  <text x="408" y="182" font-size="13">issues</text>
+  <text x="539" y="76" font-size="13" text-anchor="middle">uses</text>
+  <text x="683" y="170" font-size="13">implements</text>
+  <text x="266" y="242" font-size="13" text-anchor="middle">in slot</text>
+  <text x="408" y="320" font-size="13">for</text>
+
+  <text x="560" y="340" font-size="13">New fee rule = new Pricing type.</text>
+  <text x="560" y="360" font-size="13">ParkingLot code does not change</text>
+  <text x="560" y="380" font-size="13">(open/closed principle).</text>
+</svg>

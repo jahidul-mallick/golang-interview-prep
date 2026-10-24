@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" width="800" height="340" font-family="Arial, Helvetica, sans-serif" fill="#1B1F24">
+  <title>KV store with TTL: Set stamps an expiry, Get checks it lazily, a sweeper deletes expired keys, Close stops the sweeper</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="340" fill="#FFFFFF"/>
+  <text x="16" y="30" font-size="16" font-weight="bold">KV store with TTL: lazy check plus background sweeper</text>
+
+  <rect x="290" y="80" width="220" height="150" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="400" y="112" font-size="15" font-weight="bold" text-anchor="middle">Store (sync.RWMutex)</text>
+  <text x="400" y="140" font-size="14" text-anchor="middle">map[string]entry</text>
+  <text x="400" y="164" font-size="14" text-anchor="middle">entry = {val, expires}</text>
+  <text x="400" y="188" font-size="13" text-anchor="middle">zero expires = never expires</text>
+
+  <rect x="20" y="50" width="230" height="80" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="135" y="80" font-size="15" font-weight="bold" text-anchor="middle">Set(key, val, ttl)</text>
+  <text x="135" y="102" font-size="14" text-anchor="middle">expires = now + ttl</text>
+  <text x="135" y="120" font-size="13" text-anchor="middle">takes Lock</text>
+
+  <rect x="20" y="170" width="230" height="100" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="135" y="198" font-size="15" font-weight="bold" text-anchor="middle">Get(key)</text>
+  <text x="135" y="220" font-size="14" text-anchor="middle">RLock, read entry</text>
+  <text x="135" y="240" font-size="14" text-anchor="middle">expired = report missing</text>
+  <text x="135" y="258" font-size="13" text-anchor="middle">(lazy expiry)</text>
+
+  <rect x="550" y="50" width="230" height="90" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="665" y="80" font-size="15" font-weight="bold" text-anchor="middle">Sweeper goroutine</text>
+  <text x="665" y="102" font-size="14" text-anchor="middle">on every ticker tick</text>
+  <text x="665" y="122" font-size="14" text-anchor="middle">Lock, delete expired keys</text>
+
+  <rect x="550" y="190" width="230" height="80" rx="6" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="665" y="218" font-size="15" font-weight="bold" text-anchor="middle">Close()</text>
+  <text x="665" y="240" font-size="14" text-anchor="middle">close(stop), ticker.Stop()</text>
+  <text x="665" y="258" font-size="13" text-anchor="middle">sweeper returns</text>
+
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="250" y1="100" x2="288" y2="125"/>
+    <line x1="250" y1="210" x2="288" y2="185"/>
+    <line x1="550" y1="100" x2="512" y2="125"/>
+    <line x1="665" y1="190" x2="665" y2="142"/>
+  </g>
+
+  <text x="16" y="312" font-size="13">Use both: lazy expiry keeps Get correct, the sweeper keeps memory bounded, Close stops the goroutine.</text>
+</svg>

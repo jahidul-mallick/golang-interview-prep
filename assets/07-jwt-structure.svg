@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" width="800" height="320" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>A JWT is header.payload.signature: what each part holds, who signs and who verifies</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="800" height="320" fill="#FFFFFF"/>
+
+  <text x="400" y="30" font-size="15" font-weight="bold" text-anchor="middle">JWT = three base64url parts joined by dots</text>
+
+  <rect x="30" y="50" width="220" height="100" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="140" y="78" text-anchor="middle" font-weight="bold">Header</text>
+  <text x="140" y="103" font-size="13" text-anchor="middle">alg: RS256, typ: JWT</text>
+  <text x="140" y="125" font-size="13" text-anchor="middle">pin the algorithm</text>
+
+  <text x="270" y="110" font-size="30" font-weight="bold" text-anchor="middle">.</text>
+
+  <rect x="290" y="50" width="220" height="100" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="400" y="78" text-anchor="middle" font-weight="bold">Payload (claims)</text>
+  <text x="400" y="103" font-size="13" text-anchor="middle">sub, exp, iss, aud, roles</text>
+  <text x="400" y="125" font-size="13" text-anchor="middle">readable by anyone</text>
+
+  <text x="530" y="110" font-size="30" font-weight="bold" text-anchor="middle">.</text>
+
+  <rect x="550" y="50" width="220" height="100" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="660" y="78" text-anchor="middle" font-weight="bold">Signature</text>
+  <text x="660" y="103" font-size="13" text-anchor="middle">sign(header.payload,</text>
+  <text x="660" y="125" font-size="13" text-anchor="middle">private key)</text>
+
+  <rect x="30" y="215" width="300" height="80" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="180" y="245" text-anchor="middle" font-weight="bold">Auth server</text>
+  <text x="180" y="270" font-size="13" text-anchor="middle">signs with the private key</text>
+
+  <rect x="470" y="215" width="300" height="80" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="620" y="240" text-anchor="middle" font-weight="bold">Any service (your Go API)</text>
+  <text x="620" y="262" font-size="13" text-anchor="middle">verifies with the public key,</text>
+  <text x="620" y="281" font-size="13" text-anchor="middle">then checks exp, iss, aud</text>
+
+  <line x1="332" y1="255" x2="468" y2="255" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+  <text x="400" y="243" font-size="13" text-anchor="middle">Bearer token</text>
+</svg>

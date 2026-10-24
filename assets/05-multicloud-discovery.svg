@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+<title>Multi-cloud discovery: collectors pull from cloud APIs, detect changes, write a Neo4j graph, served by a query API</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker></defs>
+<rect width="800" height="400" fill="#FFFFFF"/>
+<rect x="20" y="90" width="120" height="60" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<text x="80" y="125" text-anchor="middle" font-size="14" font-weight="bold">AWS APIs</text>
+<rect x="20" y="230" width="120" height="60" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<text x="80" y="265" text-anchor="middle" font-size="14" font-weight="bold">GCP APIs</text>
+<rect x="175" y="30" width="150" height="56" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="250" y="55" text-anchor="middle" font-size="14" font-weight="bold">Scheduler</text>
+<text x="250" y="74" text-anchor="middle">periodic or events</text>
+<rect x="175" y="140" width="150" height="110" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="250" y="175" text-anchor="middle" font-size="14" font-weight="bold">Collectors (Go)</text>
+<text x="250" y="198" text-anchor="middle">one per provider</text>
+<text x="250" y="217" text-anchor="middle">bounded concurrency</text>
+<text x="250" y="236" text-anchor="middle">retry with backoff</text>
+<rect x="360" y="150" width="130" height="90" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="425" y="182" text-anchor="middle" font-size="14" font-weight="bold">Change check</text>
+<text x="425" y="205" text-anchor="middle">compare to stored</text>
+<text x="425" y="224" text-anchor="middle">state, upsert diff</text>
+<rect x="525" y="150" width="120" height="90" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+<text x="585" y="182" text-anchor="middle" font-size="14" font-weight="bold">Neo4j</text>
+<text x="585" y="205" text-anchor="middle">resource nodes</text>
+<text x="585" y="224" text-anchor="middle">and edges</text>
+<rect x="680" y="150" width="110" height="90" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="735" y="182" text-anchor="middle" font-size="14" font-weight="bold">Query API</text>
+<text x="735" y="205" text-anchor="middle">Cypher behind</text>
+<text x="735" y="224" text-anchor="middle">REST / gRPC</text>
+<rect x="680" y="290" width="110" height="56" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="735" y="323" text-anchor="middle" font-size="14" font-weight="bold">Dashboard</text>
+<line x1="140" y1="125" x2="173" y2="175" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="140" y1="265" x2="173" y2="215" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="250" y1="86" x2="250" y2="138" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="325" y1="195" x2="358" y2="195" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="490" y1="195" x2="523" y2="195" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="645" y1="195" x2="678" y2="195" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="735" y1="240" x2="735" y2="288" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="20" y="330">Collectors and API run as Kubernetes workloads on AWS and GCP.</text>
+<text x="20" y="352">Re-running a collection is safe: writes are upserts, so retries do not duplicate.</text>
+<text x="20" y="374">Deleted resources: compare a full snapshot with the graph and remove stale nodes.</text>
+</svg>

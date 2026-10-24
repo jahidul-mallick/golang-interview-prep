@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Deadlock: two goroutines take two locks in opposite order and wait on each other</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="400" fill="#FFFFFF"/>
+  <text x="400" y="26" text-anchor="middle" font-size="16" font-weight="bold">Deadlock: opposite lock order makes a cycle</text>
+
+  <rect x="330" y="60" width="140" height="50" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="400" y="91" text-anchor="middle" font-weight="bold">Lock 1</text>
+  <rect x="330" y="250" width="140" height="50" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="400" y="281" text-anchor="middle" font-weight="bold">Lock 2</text>
+
+  <rect x="40" y="140" width="160" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="120" y="172" text-anchor="middle" font-weight="bold">Goroutine A</text>
+  <text x="120" y="194" text-anchor="middle">Lock 1, then Lock 2</text>
+  <rect x="600" y="140" width="160" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="680" y="172" text-anchor="middle" font-weight="bold">Goroutine B</text>
+  <text x="680" y="194" text-anchor="middle">Lock 2, then Lock 1</text>
+
+  <line x1="200" y1="155" x2="328" y2="95" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="212" y="112">A holds</text>
+  <line x1="200" y1="205" x2="328" y2="265" stroke="#555" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+  <text x="212" y="262">A waits for</text>
+  <line x1="600" y1="205" x2="472" y2="265" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="588" y="262" text-anchor="end">B holds</text>
+  <line x1="600" y1="155" x2="472" y2="95" stroke="#555" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+  <text x="588" y="98" text-anchor="end">B waits for</text>
+
+  <rect x="340" y="150" width="120" height="60" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="400" y="176" text-anchor="middle" font-weight="bold">Cycle</text>
+  <text x="400" y="196" text-anchor="middle">stuck forever</text>
+
+  <text x="400" y="326" text-anchor="middle" font-size="13">Solid arrow: lock already held. Dashed arrow: lock being waited for.</text>
+  <rect x="100" y="338" width="600" height="48" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="400" y="368" text-anchor="middle" font-weight="bold">Fix: both goroutines lock Lock 1 first, then Lock 2</text>
+</svg>

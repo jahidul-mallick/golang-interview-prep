@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 430" width="800" height="430" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1B1F24">
+  <title>Circuit breaker states: closed, open, half-open</title>
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="430" fill="#FFFFFF"/>
+
+  <rect x="40" y="150" width="180" height="80" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="130" y="184" text-anchor="middle" font-weight="bold">Closed</text>
+  <text x="130" y="208" text-anchor="middle">Calls pass through</text>
+
+  <rect x="580" y="150" width="180" height="80" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="670" y="184" text-anchor="middle" font-weight="bold">Open</text>
+  <text x="670" y="208" text-anchor="middle">Calls fail fast</text>
+
+  <rect x="310" y="300" width="180" height="80" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="400" y="334" text-anchor="middle" font-weight="bold">Half-open</text>
+  <text x="400" y="358" text-anchor="middle">A few probe calls</text>
+
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#a)">
+    <line x1="220" y1="190" x2="578" y2="190"/>
+    <line x1="640" y1="232" x2="470" y2="298"/>
+    <line x1="310" y1="340" x2="130" y2="232"/>
+    <path d="M490,350 Q700,380 700,232"/>
+  </g>
+  <text x="400" y="178" text-anchor="middle">failures pass the threshold</text>
+  <text x="545" y="262" text-anchor="end">after cooldown</text>
+  <text x="240" y="262">probe succeeds</text>
+  <text x="750" y="320" text-anchor="middle">probe fails</text>
+  <text x="400" y="415" text-anchor="middle">Keep one breaker per dependency</text>
+</svg>

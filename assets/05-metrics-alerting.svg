@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+  <title>Metrics and alerting: scrape /metrics into a time-series DB, dashboards query it, alert rules go to the alert manager</title>
+  <rect x="0" y="0" width="800" height="400" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="30" font-size="16" font-weight="bold">Metrics, monitoring and alerting</text>
+
+  <!-- Row 1 -->
+  <rect x="30" y="60" width="130" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="95" y="92" text-anchor="middle" font-weight="bold">Services</text>
+  <text x="95" y="114" text-anchor="middle">expose /metrics</text>
+
+  <rect x="240" y="60" width="130" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="305" y="92" text-anchor="middle" font-weight="bold">Scraper</text>
+  <text x="305" y="114" text-anchor="middle">pulls on interval</text>
+
+  <rect x="450" y="60" width="130" height="80" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="515" y="92" text-anchor="middle" font-weight="bold">Time-series DB</text>
+  <text x="515" y="114" text-anchor="middle">short retention</text>
+
+  <rect x="660" y="60" width="110" height="80" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="715" y="92" text-anchor="middle" font-weight="bold">Long-term</text>
+  <text x="715" y="114" text-anchor="middle">store</text>
+
+  <!-- Row 2 -->
+  <rect x="30" y="220" width="130" height="80" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="95" y="252" text-anchor="middle" font-weight="bold">Slack / pager</text>
+  <text x="95" y="274" text-anchor="middle">on-call gets it</text>
+
+  <rect x="240" y="220" width="130" height="80" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="305" y="252" text-anchor="middle" font-weight="bold">Alert manager</text>
+  <text x="305" y="274" text-anchor="middle">dedupe, route</text>
+
+  <rect x="450" y="220" width="130" height="80" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="515" y="252" text-anchor="middle" font-weight="bold">Alert rules</text>
+  <text x="515" y="274" text-anchor="middle">condition + time</text>
+
+  <rect x="660" y="220" width="110" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="715" y="252" text-anchor="middle" font-weight="bold">Dashboards</text>
+  <text x="715" y="274" text-anchor="middle">graphs</text>
+
+  <!-- Arrows -->
+  <g stroke="#555555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="240" y1="100" x2="162" y2="100"/>
+    <line x1="370" y1="100" x2="448" y2="100"/>
+    <line x1="580" y1="100" x2="658" y2="100"/>
+    <line x1="515" y1="140" x2="515" y2="218"/>
+    <line x1="450" y1="260" x2="372" y2="260"/>
+    <line x1="240" y1="260" x2="162" y2="260"/>
+    <line x1="690" y1="220" x2="568" y2="142"/>
+  </g>
+  <g text-anchor="middle">
+    <text x="201" y="88">pull</text>
+    <text x="201" y="118">/metrics</text>
+    <text x="409" y="92">store</text>
+    <text x="619" y="88">remote</text>
+    <text x="619" y="118">write</text>
+    <text x="411" y="250">firing</text>
+    <text x="201" y="250">notify</text>
+  </g>
+  <text x="527" y="184">rules query</text>
+  <text x="652" y="190">query</text>
+
+  <!-- Note -->
+  <rect x="30" y="335" width="740" height="44" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="44" y="362">Alert on symptoms that hold for a set time (error rate high for 5 min), and keep labels low-cardinality.</text>
+</svg>

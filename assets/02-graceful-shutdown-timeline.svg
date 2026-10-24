@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 830" width="800" height="830" font-family="Arial, Helvetica, sans-serif" fill="#1B1F24">
+  <title>Graceful shutdown timeline for a Go HTTP service on Kubernetes</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D13B3B"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="830" fill="#FFFFFF"/>
+  <text x="20" y="30" font-size="17" font-weight="bold">Graceful shutdown: Go HTTP service on Kubernetes</text>
+
+  <!-- connectors between steps -->
+  <g stroke="#555" stroke-width="2" fill="none">
+    <line x1="292" y1="135" x2="292" y2="163" marker-end="url(#arrow)"/>
+    <line x1="292" y1="245" x2="292" y2="273" marker-end="url(#arrow)"/>
+    <line x1="292" y1="355" x2="292" y2="383" marker-end="url(#arrow)"/>
+    <line x1="292" y1="465" x2="292" y2="493" marker-end="url(#arrow)"/>
+    <line x1="292" y1="575" x2="292" y2="603" marker-end="url(#arrow)"/>
+    <line x1="292" y1="685" x2="292" y2="713" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- step 1 -->
+  <circle cx="40" cy="95" r="15" fill="#2F6FDE"/>
+  <text x="40" y="100" font-size="14" font-weight="bold" text-anchor="middle" fill="#FFFFFF">1</text>
+  <rect x="75" y="55" width="435" height="80" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="90" y="78" font-size="15" font-weight="bold">Pod is terminating</text>
+  <text x="90" y="100" font-size="13">Kubernetes removes the Pod from Service endpoints</text>
+  <text x="90" y="119" font-size="13">and sends SIGTERM (runs the preStop hook first, if set).</text>
+
+  <!-- step 2 -->
+  <circle cx="40" cy="205" r="15" fill="#2F6FDE"/>
+  <text x="40" y="210" font-size="14" font-weight="bold" text-anchor="middle" fill="#FFFFFF">2</text>
+  <rect x="75" y="165" width="435" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="90" y="188" font-size="15" font-weight="bold">signal.NotifyContext cancels the root context</text>
+  <text x="90" y="210" font-size="13">ctx.Done() fires, so main stops waiting</text>
+  <text x="90" y="229" font-size="13">and starts the drain.</text>
+
+  <!-- step 3 -->
+  <circle cx="40" cy="315" r="15" fill="#2F6FDE"/>
+  <text x="40" y="320" font-size="14" font-weight="bold" text-anchor="middle" fill="#FFFFFF">3</text>
+  <rect x="75" y="275" width="435" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="90" y="298" font-size="15" font-weight="bold">Mark readiness as failing</text>
+  <text x="90" y="320" font-size="13">No new traffic is routed to this Pod. Optional short sleep</text>
+  <text x="90" y="339" font-size="13">so load balancers notice.</text>
+
+  <!-- step 4 -->
+  <circle cx="40" cy="425" r="15" fill="#2F6FDE"/>
+  <text x="40" y="430" font-size="14" font-weight="bold" text-anchor="middle" fill="#FFFFFF">4</text>
+  <rect x="75" y="385" width="435" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="90" y="408" font-size="15" font-weight="bold">srv.Shutdown(ctx with timeout)</text>
+  <text x="90" y="430" font-size="13">Closes listeners, waits for in-flight requests to finish.</text>
+  <text x="90" y="449" font-size="13">Idle connections are closed.</text>
+
+  <!-- step 5 -->
+  <circle cx="40" cy="535" r="15" fill="#2F6FDE"/>
+  <text x="40" y="540" font-size="14" font-weight="bold" text-anchor="middle" fill="#FFFFFF">5</text>
+  <rect x="75" y="495" width="435" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="90" y="518" font-size="15" font-weight="bold">Stop background work</text>
+  <text x="90" y="540" font-size="13">Cancel workers, wait with WaitGroup or errgroup,</text>
+  <text x="90" y="559" font-size="13">flush buffers, commit offsets or ack messages.</text>
+
+  <!-- step 6 -->
+  <circle cx="40" cy="645" r="15" fill="#2F6FDE"/>
+  <text x="40" y="650" font-size="14" font-weight="bold" text-anchor="middle" fill="#FFFFFF">6</text>
+  <rect x="75" y="605" width="435" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="90" y="628" font-size="15" font-weight="bold">Close dependencies in reverse order</text>
+  <text x="90" y="650" font-size="13">Examples: DB pool, Redis, Kafka producer.</text>
+  <text x="90" y="669" font-size="13">Close last-opened first.</text>
+
+  <!-- step 7 -->
+  <circle cx="40" cy="755" r="15" fill="#2E9E44"/>
+  <text x="40" y="760" font-size="14" font-weight="bold" text-anchor="middle" fill="#FFFFFF">7</text>
+  <rect x="75" y="715" width="435" height="80" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="90" y="738" font-size="15" font-weight="bold">Process exits with code 0</text>
+  <text x="90" y="760" font-size="13">main returns after everything above is done.</text>
+  <text x="90" y="779" font-size="13">Kubernetes sees a clean exit.</text>
+
+  <!-- note on hijacked connections -->
+  <rect x="540" y="270" width="250" height="90" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="552" y="292" font-size="13" font-weight="bold">Step 4 note</text>
+  <text x="552" y="311" font-size="13">Shutdown does not wait for</text>
+  <text x="552" y="329" font-size="13">hijacked connections such as</text>
+  <text x="552" y="347" font-size="13">WebSockets. Close those yourself.</text>
+
+  <!-- failure path -->
+  <line x1="510" y1="435" x2="538" y2="435" stroke="#D13B3B" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowRed)"/>
+  <rect x="540" y="385" width="250" height="100" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="552" y="408" font-size="13" font-weight="bold">Failure path: deadline exceeded</text>
+  <text x="552" y="428" font-size="13">Shutdown timeout, or</text>
+  <text x="552" y="446" font-size="13">terminationGracePeriodSeconds</text>
+  <text x="552" y="464" font-size="13">(default 30 s) runs out.</text>
+  <line x1="665" y1="485" x2="665" y2="523" stroke="#D13B3B" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowRed)"/>
+  <rect x="540" y="525" width="250" height="60" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="552" y="548" font-size="13" font-weight="bold">Kubernetes sends SIGKILL</text>
+  <text x="552" y="568" font-size="13">In-flight work is lost.</text>
+</svg>

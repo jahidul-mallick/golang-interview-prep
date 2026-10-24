@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 896" width="800" height="896" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+  <title>A database call from Go to PostgreSQL and back</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="896" fill="#FFFFFF"/>
+
+  <!-- arrows -->
+  <g stroke="#555" stroke-width="2" marker-end="url(#arrow)">
+    <line x1="420" y1="98" x2="420" y2="120"/>
+    <line x1="420" y1="218" x2="420" y2="240"/>
+    <line x1="420" y1="338" x2="420" y2="360"/>
+    <line x1="420" y1="438" x2="420" y2="460"/>
+    <line x1="420" y1="558" x2="420" y2="580"/>
+  </g>
+
+  <!-- 1 -->
+  <rect x="70" y="44" width="700" height="54" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="40" cy="71" r="14" fill="#2F6FDE"/>
+  <text x="40" y="76" text-anchor="middle" font-size="14" font-weight="bold" fill="#FFFFFF">1</text>
+  <text x="86" y="66" font-size="14" font-weight="bold">Handler calls the repository method with ctx</text>
+  <text x="86" y="86">The ctx comes from the incoming request (r.Context()).</text>
+
+  <!-- 2 -->
+  <rect x="70" y="122" width="700" height="96" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="40" cy="170" r="14" fill="#2F6FDE"/>
+  <text x="40" y="175" text-anchor="middle" font-size="14" font-weight="bold" fill="#FFFFFF">2</text>
+  <text x="86" y="144" font-size="14" font-weight="bold">database/sql: *DB is a connection pool</text>
+  <text x="86" y="164">Tune it with SetMaxOpenConns, SetMaxIdleConns, SetConnMaxLifetime.</text>
+  <text x="86" y="184">A free connection is taken, or the call waits,</text>
+  <text x="86" y="204">or a new connection is opened, up to the max.</text>
+
+  <!-- 3 -->
+  <rect x="70" y="242" width="700" height="96" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="40" cy="290" r="14" fill="#2F6FDE"/>
+  <text x="40" y="295" text-anchor="middle" font-size="14" font-weight="bold" fill="#FFFFFF">3</text>
+  <text x="86" y="264" font-size="14" font-weight="bold">db.QueryContext(ctx, sql, args)</text>
+  <text x="86" y="284">Placeholders ($1, $2) send values separately from the SQL text,</text>
+  <text x="86" y="304">which prevents SQL injection. Never build SQL by string concatenation.</text>
+  <text x="86" y="324">The context deadline or cancel stops the query.</text>
+
+  <!-- 4 -->
+  <rect x="70" y="362" width="700" height="76" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <circle cx="40" cy="400" r="14" fill="#2E9E44"/>
+  <text x="40" y="405" text-anchor="middle" font-size="14" font-weight="bold" fill="#FFFFFF">4</text>
+  <text x="86" y="384" font-size="14" font-weight="bold">PostgreSQL runs the query</text>
+  <text x="86" y="404">Parse and plan: use an index, or a sequential scan (EXPLAIN ANALYZE shows which).</text>
+  <text x="86" y="424">Then execute and send the rows back.</text>
+
+  <!-- 5 -->
+  <rect x="70" y="462" width="700" height="96" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="40" cy="510" r="14" fill="#2F6FDE"/>
+  <text x="40" y="515" text-anchor="middle" font-size="14" font-weight="bold" fill="#FFFFFF">5</text>
+  <text x="86" y="484" font-size="14" font-weight="bold">Read the rows: rows.Next / rows.Scan loop</text>
+  <text x="86" y="504">defer rows.Close() right after the error check.</text>
+  <text x="86" y="524">After the loop, check rows.Err().</text>
+  <text x="86" y="544">Rows left open leak the connection.</text>
+
+  <!-- 6 -->
+  <rect x="70" y="582" width="700" height="54" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="40" cy="609" r="14" fill="#2F6FDE"/>
+  <text x="40" y="614" text-anchor="middle" font-size="14" font-weight="bold" fill="#FFFFFF">6</text>
+  <text x="86" y="604" font-size="14" font-weight="bold">The connection goes back to the pool</text>
+  <text x="86" y="624">It is idle again, ready for the next caller.</text>
+
+  <!-- transaction lane -->
+  <rect x="40" y="664" width="360" height="206" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="56" y="690" font-size="14" font-weight="bold">Second lane: transaction</text>
+  <text x="56" y="716">tx, err := db.BeginTx(ctx, nil)</text>
+  <text x="56" y="738">defer tx.Rollback()  (safe after Commit)</text>
+  <text x="56" y="760">run every statement on tx, not on db</text>
+  <text x="56" y="782">on error: return, the deferred Rollback runs</text>
+  <text x="56" y="804">on success: tx.Commit()</text>
+  <text x="56" y="826">one connection is held until the end</text>
+
+  <!-- traps -->
+  <rect x="420" y="664" width="360" height="206" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="436" y="690" font-size="14" font-weight="bold">Common traps</text>
+  <text x="436" y="716">- N+1 queries in a loop</text>
+  <text x="436" y="738">- Missing index</text>
+  <text x="436" y="760">- Forgetting rows.Close()</text>
+  <text x="436" y="782">- Long transactions holding locks</text>
+  <text x="436" y="804">- Offset pagination on big tables (use keyset)</text>
+  <text x="436" y="826">- No context timeout</text>
+  <text x="436" y="848">- Pool size too large for the database</text>
+</svg>

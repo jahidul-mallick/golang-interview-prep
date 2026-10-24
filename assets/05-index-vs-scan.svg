@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>B-tree index lookup versus full table scan</title>
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="380" fill="#FFFFFF"/>
+
+  <text x="40" y="30" font-weight="bold">With a B-tree index: WHERE id = 42</text>
+  <rect x="60" y="50" width="260" height="42" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="190" y="76" text-anchor="middle">Root: keys 1 .. 1M</text>
+  <rect x="60" y="120" width="260" height="42" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="190" y="146" text-anchor="middle">Inner page: keys 1 .. 5k</text>
+  <rect x="60" y="190" width="260" height="42" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="190" y="216" text-anchor="middle">Leaf: 42 -> row pointer</text>
+  <rect x="60" y="260" width="260" height="42" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="190" y="286" text-anchor="middle">Table row id = 42</text>
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#a)">
+    <line x1="190" y1="92" x2="190" y2="118"/>
+    <line x1="190" y1="162" x2="190" y2="188"/>
+    <line x1="190" y1="232" x2="190" y2="258"/>
+  </g>
+
+  <text x="440" y="30" font-weight="bold">No index: full table scan</text>
+  <rect x="480" y="50" width="260" height="42" rx="6" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="610" y="76" text-anchor="middle">row 1: id = 7, no match</text>
+  <rect x="480" y="120" width="260" height="42" rx="6" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="610" y="146" text-anchor="middle">row 2: id = 913, no match</text>
+  <rect x="480" y="190" width="260" height="42" rx="6" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="610" y="216" text-anchor="middle">... one row after another</text>
+  <rect x="480" y="260" width="260" height="42" rx="6" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="610" y="286" text-anchor="middle">row N: finally id = 42</text>
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#a)">
+    <line x1="610" y1="92" x2="610" y2="118"/>
+    <line x1="610" y1="162" x2="610" y2="188"/>
+    <line x1="610" y1="232" x2="610" y2="258"/>
+  </g>
+
+  <text x="400" y="340" text-anchor="middle">1M rows: about 3 page reads with the index, about 1M row reads without.</text>
+  <text x="400" y="362" text-anchor="middle">The price: every insert and update must also maintain the index.</text>
+</svg>

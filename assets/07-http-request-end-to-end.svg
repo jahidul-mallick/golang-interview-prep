@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 910" width="800" height="910" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+<title>One HTTP request through a Go REST service, end to end</title>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker></defs>
+<rect x="0" y="0" width="800" height="910" fill="#FFFFFF"/>
+<text x="20" y="28" font-size="16" font-weight="bold">One HTTP request through a Go REST service</text>
+
+<rect x="64" y="48" width="520" height="68" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="36" cy="82" r="14" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="36" y="87" text-anchor="middle" font-weight="bold">1</text>
+<text x="80" y="70" font-size="14" font-weight="bold">Client sends an HTTPS request</text>
+<text x="80" y="89">For example POST /orders with a JSON body</text>
+<text x="80" y="107">and an Authorization header</text>
+<line x1="324" y1="116" x2="324" y2="134" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+<rect x="64" y="134" width="520" height="68" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="36" cy="168" r="14" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="36" y="173" text-anchor="middle" font-weight="bold">2</text>
+<text x="80" y="156" font-size="14" font-weight="bold">Load balancer / ingress</text>
+<text x="80" y="175">Terminates TLS and forwards the request to a pod</text>
+<line x1="324" y1="202" x2="324" y2="220" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+<rect x="64" y="220" width="520" height="68" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="36" cy="254" r="14" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="36" y="259" text-anchor="middle" font-weight="bold">3</text>
+<text x="80" y="242" font-size="14" font-weight="bold">net/http server</text>
+<text x="80" y="261">A goroutine serves each connection / request</text>
+<text x="80" y="279">r.Context() is cancelled when the client goes away</text>
+<line x1="324" y1="288" x2="324" y2="306" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+<rect x="64" y="306" width="520" height="68" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="36" cy="340" r="14" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="36" y="345" text-anchor="middle" font-weight="bold">4</text>
+<text x="80" y="328" font-size="14" font-weight="bold">Router: http.ServeMux (Go 1.22+)</text>
+<text x="80" y="347">Method and path patterns, e.g. "GET /orders/{id}"</text>
+<text x="80" y="365">Picks the handler</text>
+<line x1="324" y1="374" x2="324" y2="392" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+<rect x="64" y="392" width="520" height="68" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<circle cx="36" cy="426" r="14" fill="#FFFFFF" stroke="#E0A100" stroke-width="2"/>
+<text x="36" y="431" text-anchor="middle" font-weight="bold">5</text>
+<text x="80" y="414" font-size="14" font-weight="bold">Middleware chain (outermost runs first)</text>
+<text x="80" y="433">Request ID + logging, panic recovery, auth (JWT check)</text>
+<text x="80" y="451">Rate limit, timeout (http.TimeoutHandler or context.WithTimeout)</text>
+<line x1="324" y1="460" x2="324" y2="478" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+<rect x="64" y="478" width="520" height="68" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="36" cy="512" r="14" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="36" y="517" text-anchor="middle" font-weight="bold">6</text>
+<text x="80" y="500" font-size="14" font-weight="bold">Handler</text>
+<text x="80" y="519">Decode JSON, validate the input</text>
+<text x="80" y="537">Call the service layer with r.Context()</text>
+<line x1="324" y1="546" x2="324" y2="564" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+<rect x="64" y="564" width="520" height="68" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="36" cy="598" r="14" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="36" y="603" text-anchor="middle" font-weight="bold">7</text>
+<text x="80" y="586" font-size="14" font-weight="bold">Service layer</text>
+<text x="80" y="605">Business rules</text>
+<text x="80" y="623">Reaches storage through a repository interface</text>
+<line x1="324" y1="632" x2="324" y2="650" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+<rect x="64" y="650" width="520" height="68" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+<circle cx="36" cy="684" r="14" fill="#FFFFFF" stroke="#2E9E44" stroke-width="2"/>
+<text x="36" y="689" text-anchor="middle" font-weight="bold">8</text>
+<text x="80" y="672" font-size="14" font-weight="bold">Data: cache first, then database</text>
+<text x="80" y="691">Redis cache-aside: check Redis first. On a miss, PostgreSQL</text>
+<text x="80" y="709">via the database/sql pool, QueryContext with the request context</text>
+<line x1="324" y1="718" x2="324" y2="736" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+<rect x="64" y="736" width="520" height="68" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="36" cy="770" r="14" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="36" y="775" text-anchor="middle" font-weight="bold">9</text>
+<text x="80" y="758" font-size="14" font-weight="bold">Handler writes the response</text>
+<text x="80" y="777">Encode JSON, set headers, write the status code</text>
+<line x1="324" y1="804" x2="324" y2="822" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+<rect x="64" y="822" width="520" height="68" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<circle cx="36" cy="856" r="14" fill="#FFFFFF" stroke="#E0A100" stroke-width="2"/>
+<text x="36" y="861" text-anchor="middle" font-weight="bold">10</text>
+<text x="80" y="844" font-size="14" font-weight="bold">Response returns through middleware in reverse</text>
+<text x="80" y="863">Logging records status and latency,</text>
+<text x="80" y="881">then the response reaches the client</text>
+
+<line x1="584" y1="426" x2="612" y2="426" stroke="#555" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#a)"/>
+<rect x="614" y="330" width="170" height="200" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+<text x="626" y="354" font-size="14" font-weight="bold">Observability</text>
+<text x="626" y="378" font-weight="bold">Metrics:</text>
+<text x="626" y="397">request counter and</text>
+<text x="626" y="416">latency histogram</text>
+<text x="626" y="435" font-weight="bold">Log:</text>
+<text x="626" y="454">structured line with</text>
+<text x="626" y="473">the request id</text>
+<text x="626" y="492" font-weight="bold">Trace:</text>
+<text x="626" y="511">one span per request</text>
+
+<rect x="614" y="560" width="170" height="170" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+<text x="626" y="584" font-size="14" font-weight="bold">Failure paths</text>
+<text x="626" y="609">400 bad input</text>
+<text x="626" y="629">401 / 403 auth</text>
+<text x="626" y="649">429 rate limit</text>
+<text x="626" y="669">500 / 503 server error</text>
+<text x="626" y="689">context deadline</text>
+<text x="626" y="709">exceeded -&gt; 504</text>
+</svg>

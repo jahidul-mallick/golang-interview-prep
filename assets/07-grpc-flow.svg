@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 310" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>gRPC call flow: client, generated stub, HTTP/2, server stub, handler, and the four call types</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="800" height="310" fill="#FFFFFF"/>
+
+  <rect x="180" y="12" width="440" height="36" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="400" y="35" text-anchor="middle">Interceptors wrap the call on both sides</text>
+
+  <rect x="25" y="70" width="130" height="70" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="90" y="100" text-anchor="middle">Client code</text>
+  <text x="90" y="120" text-anchor="middle">calls Hello()</text>
+
+  <rect x="180" y="70" width="130" height="70" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="245" y="100" text-anchor="middle">Client stub</text>
+  <text x="245" y="120" text-anchor="middle">(generated)</text>
+
+  <rect x="335" y="70" width="130" height="70" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="400" y="100" text-anchor="middle">HTTP/2</text>
+  <text x="400" y="120" text-anchor="middle">one connection</text>
+
+  <rect x="490" y="70" width="130" height="70" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="555" y="100" text-anchor="middle">Server stub</text>
+  <text x="555" y="120" text-anchor="middle">(generated)</text>
+
+  <rect x="645" y="70" width="130" height="70" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="710" y="100" text-anchor="middle">Your handler</text>
+  <text x="710" y="120" text-anchor="middle">business logic</text>
+
+  <g stroke="#555" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)">
+    <line x1="157" y1="105" x2="178" y2="105"/>
+    <line x1="312" y1="105" x2="333" y2="105"/>
+    <line x1="467" y1="105" x2="488" y2="105"/>
+    <line x1="622" y1="105" x2="643" y2="105"/>
+  </g>
+
+  <text x="400" y="168" text-anchor="middle">Protobuf bytes on the wire. Deadline and metadata travel as headers.</text>
+  <text x="400" y="210" text-anchor="middle" font-weight="bold">Four call types, same connection</text>
+
+  <rect x="20" y="225" width="175" height="68" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="107" y="248" text-anchor="middle" font-weight="bold">Unary</text>
+  <text x="107" y="268" text-anchor="middle" font-size="13">1 request, 1 response</text>
+
+  <rect x="215" y="225" width="175" height="68" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="302" y="248" text-anchor="middle" font-weight="bold">Server streaming</text>
+  <text x="302" y="268" text-anchor="middle" font-size="13">1 request, many responses</text>
+
+  <rect x="410" y="225" width="175" height="68" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="497" y="248" text-anchor="middle" font-weight="bold">Client streaming</text>
+  <text x="497" y="268" text-anchor="middle" font-size="13">many requests, 1 response</text>
+
+  <rect x="605" y="225" width="175" height="68" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="692" y="248" text-anchor="middle" font-weight="bold">Bidirectional</text>
+  <text x="692" y="268" text-anchor="middle" font-size="13">both sides stream</text>
+</svg>

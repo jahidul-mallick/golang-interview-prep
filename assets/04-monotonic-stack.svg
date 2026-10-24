@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" width="800" height="350" font-family="Arial, Helvetica, sans-serif" fill="#1B1F24">
+  <title>Monotonic stack: next greater element trace for 2 1 5 3 4</title>
+  <rect x="0" y="0" width="800" height="350" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="30" font-size="16" font-weight="bold" text-anchor="middle">Next greater element: the stack stays decreasing (bottom to top)</text>
+
+  <text x="20" y="98" font-size="14" font-weight="bold">input</text>
+  <text x="20" y="188" font-size="14" font-weight="bold">stack</text>
+
+  <!-- column 1 -->
+  <rect x="90" y="70" width="100" height="45" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <line x1="140" y1="118" x2="140" y2="152" stroke="#555555" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="90" y="155" width="100" height="50" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <!-- column 2 -->
+  <rect x="230" y="70" width="100" height="45" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <line x1="280" y1="118" x2="280" y2="152" stroke="#555555" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="230" y="155" width="100" height="50" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <!-- column 3 -->
+  <rect x="370" y="70" width="100" height="45" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <line x1="420" y1="118" x2="420" y2="152" stroke="#555555" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="370" y="155" width="100" height="50" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <!-- column 4 -->
+  <rect x="510" y="70" width="100" height="45" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <line x1="560" y1="118" x2="560" y2="152" stroke="#555555" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="510" y="155" width="100" height="50" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <!-- column 5 -->
+  <rect x="650" y="70" width="100" height="45" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <line x1="700" y1="118" x2="700" y2="152" stroke="#555555" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="650" y="155" width="100" height="50" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+
+  <g font-size="20" text-anchor="middle">
+    <text x="140" y="100">2</text>
+    <text x="280" y="100">1</text>
+    <text x="420" y="100">5</text>
+    <text x="560" y="100">3</text>
+    <text x="700" y="100">4</text>
+    <text x="140" y="187">2</text>
+    <text x="280" y="187">2 1</text>
+    <text x="420" y="187">5</text>
+    <text x="560" y="187">5 3</text>
+    <text x="700" y="187">5 4</text>
+  </g>
+  <g font-size="14" text-anchor="middle">
+    <text x="140" y="235">no pop</text>
+    <text x="280" y="235">no pop</text>
+    <text x="420" y="235">pop 1, pop 2</text>
+    <text x="420" y="255">both get 5</text>
+    <text x="560" y="235">no pop</text>
+    <text x="700" y="235">pop 3</text>
+    <text x="700" y="255">3 gets 4</text>
+    <text x="400" y="300">The new value pops every smaller value; each pop is that value's answer.</text>
+    <text x="400" y="325">End: 5 and 4 are still in the stack, so they have no greater element (-1).</text>
+  </g>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Tri-color mark and sweep: roots turn objects grey, scanning turns them black, white objects are freed</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="380" fill="#FFFFFF"/>
+
+  <rect x="30" y="30" width="150" height="56" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="105" y="54" text-anchor="middle" font-weight="bold">Roots</text>
+  <text x="105" y="74" text-anchor="middle">stacks, globals</text>
+
+  <rect x="260" y="30" width="150" height="56" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="335" y="54" text-anchor="middle" font-weight="bold">Grey</text>
+  <text x="335" y="74" text-anchor="middle">found, not scanned</text>
+
+  <rect x="490" y="30" width="150" height="56" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="565" y="54" text-anchor="middle" font-weight="bold">Black</text>
+  <text x="565" y="74" text-anchor="middle">scanned, live</text>
+
+  <rect x="260" y="150" width="150" height="56" rx="8" fill="#FFFFFF" stroke="#555" stroke-width="2"/>
+  <text x="335" y="174" text-anchor="middle" font-weight="bold">White</text>
+  <text x="335" y="194" text-anchor="middle">not reached yet</text>
+
+  <rect x="570" y="150" width="200" height="56" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="670" y="174" text-anchor="middle" font-weight="bold">Sweep</text>
+  <text x="670" y="194" text-anchor="middle">white = garbage, freed</text>
+
+  <path d="M180,58 L258,58" stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M410,58 L488,58" stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <text x="449" y="48" text-anchor="middle">scan</text>
+  <path d="M335,150 L335,88" stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <text x="345" y="125">grey child found</text>
+  <path d="M410,178 L568,178" stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <text x="489" y="168" text-anchor="middle">mark ends</text>
+
+  <rect x="60" y="260" width="680" height="84" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="400" y="288" text-anchor="middle" font-weight="bold">Write barrier</text>
+  <text x="400" y="312" text-anchor="middle">While marking runs alongside your code, pointer writes are recorded,</text>
+  <text x="400" y="332" text-anchor="middle">so a black object can never hide a live white object.</text>
+</svg>

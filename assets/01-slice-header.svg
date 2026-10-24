@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" width="800" height="350" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Slice header pointing into a backing array</title>
+  <rect width="800" height="350" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <text x="30" y="30" font-weight="bold">s := arr[2:5]   (slice header, 24 bytes)</text>
+  <rect x="30" y="45" width="220" height="44" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="140" y="73" text-anchor="middle">ptr (to arr[2])</text>
+  <rect x="30" y="89" width="220" height="44" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="140" y="117" text-anchor="middle">len = 3</text>
+  <rect x="30" y="133" width="220" height="44" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="140" y="161" text-anchor="middle">cap = 6</text>
+  <path d="M250,67 L467,67 L467,148" fill="none" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="560" y="125">backing array arr (8 ints)</text>
+  <rect x="330" y="150" width="55" height="50" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="357" y="180" text-anchor="middle">arr[0]</text>
+  <rect x="385" y="150" width="55" height="50" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="412" y="180" text-anchor="middle">arr[1]</text>
+  <rect x="440" y="150" width="55" height="50" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="467" y="180" text-anchor="middle">arr[2]</text>
+  <rect x="495" y="150" width="55" height="50" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="522" y="180" text-anchor="middle">arr[3]</text>
+  <rect x="550" y="150" width="55" height="50" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="577" y="180" text-anchor="middle">arr[4]</text>
+  <rect x="605" y="150" width="55" height="50" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="632" y="180" text-anchor="middle">arr[5]</text>
+  <rect x="660" y="150" width="55" height="50" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="687" y="180" text-anchor="middle">arr[6]</text>
+  <rect x="715" y="150" width="55" height="50" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="742" y="180" text-anchor="middle">arr[7]</text>
+  <path d="M440,215 L440,222 L605,222 L605,215" fill="none" stroke="#2E9E44" stroke-width="2"/>
+  <text x="522" y="243" text-anchor="middle">len = 3 (visible elements)</text>
+  <path d="M440,258 L440,265 L770,265 L770,258" fill="none" stroke="#E0A100" stroke-width="2"/>
+  <text x="605" y="286" text-anchor="middle">cap = 6 (start of slice to end of array)</text>
+  <text x="30" y="325">Copying a slice copies only the header. Writes through s[i] change arr. Appending beyond cap allocates a new array.</text>
+</svg>

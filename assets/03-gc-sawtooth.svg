@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Heap size over time: it grows to the GOGC target, a GC drops it to the live heap, GOMEMLIMIT is a soft ceiling above</title>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="380" fill="#FFFFFF"/>
+  <text x="40" y="30" font-size="18" font-weight="bold">Heap size over time</text>
+
+  <!-- axes -->
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#arr)">
+    <line x1="70" y1="300" x2="70" y2="50"/>
+    <line x1="70" y1="300" x2="600" y2="300"/>
+  </g>
+  <text x="80" y="62" font-size="13">heap size</text>
+  <text x="560" y="322" font-size="13">time</text>
+
+  <!-- GOMEMLIMIT line -->
+  <line x1="70" y1="90" x2="600" y2="90" stroke="#D13B3B" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="612" y="86" font-size="14" font-weight="bold">GOMEMLIMIT</text>
+  <text x="612" y="104" font-size="13">soft ceiling: GC runs</text>
+  <text x="612" y="121" font-size="13">harder near it</text>
+
+  <!-- GOGC target line -->
+  <line x1="70" y1="160" x2="600" y2="160" stroke="#E0A100" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="612" y="156" font-size="14" font-weight="bold">GOGC target</text>
+  <text x="612" y="174" font-size="13">about live heap x 2</text>
+  <text x="612" y="191" font-size="13">(GOGC=100)</text>
+
+  <!-- live heap line -->
+  <line x1="70" y1="240" x2="600" y2="240" stroke="#2E9E44" stroke-width="2" stroke-dasharray="2 4"/>
+  <text x="612" y="236" font-size="14" font-weight="bold">Live heap</text>
+  <text x="612" y="254" font-size="13">what survives each GC</text>
+
+  <!-- sawtooth -->
+  <polyline points="90,240 230,160 230,240 370,160 370,240 510,160 510,240" fill="none" stroke="#2F6FDE" stroke-width="3"/>
+  <circle cx="230" cy="160" r="5" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="370" cy="160" r="5" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="510" cy="160" r="5" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="100" y="212" font-size="13" transform="rotate(-29 100 212)">heap grows</text>
+  <text x="238" y="276" font-size="13">GC cycle: heap drops to live</text>
+
+  <text x="40" y="352" font-size="14">Less allocation: longer climbs. Higher GOGC: taller teeth, more memory, fewer GCs.</text>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Interface values: iface and eface layout</title>
+  <rect width="800" height="400" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <text x="30" y="25" font-weight="bold">Non-empty interface, e.g. var r io.Reader = &amp;File{}  (2 words)</text>
+  <rect x="40" y="60" width="180" height="45" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="130" y="88" text-anchor="middle">tab (*itab)</text>
+  <rect x="40" y="115" width="180" height="45" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="130" y="143" text-anchor="middle">data (pointer)</text>
+  <line x1="220" y1="82" x2="328" y2="82" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="220" y1="137" x2="328" y2="137" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="330" y="40" width="300" height="70" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="345" y="62">itab: interface type (io.Reader)</text>
+  <text x="345" y="82">concrete type (*File)</text>
+  <text x="345" y="102">method table (Read ...)</text>
+  <rect x="330" y="125" width="300" height="45" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="345" y="153">the value: *File</text>
+
+  <text x="30" y="205" font-weight="bold">Empty interface, e.g. var x any = 42  (2 words)</text>
+  <rect x="40" y="220" width="180" height="45" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="130" y="248" text-anchor="middle">type (*_type)</text>
+  <rect x="40" y="275" width="180" height="45" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="130" y="303" text-anchor="middle">data (pointer)</text>
+  <line x1="220" y1="242" x2="328" y2="242" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="220" y1="297" x2="328" y2="297" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="330" y="220" width="300" height="45" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="345" y="248">type descriptor: int</text>
+  <rect x="330" y="275" width="300" height="45" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="345" y="303">the value: 42</text>
+
+  <text x="30" y="355">A nil interface has both words nil. A typed nil pointer stored in an interface</text>
+  <text x="30" y="377">has a non-nil type word, so the interface is != nil.</text>
+</svg>

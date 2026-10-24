@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 985" role="img" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+<title>Interview journey from application to offer, with what to prepare in each round</title>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker></defs>
+<rect width="800" height="985" fill="#FFFFFF"/>
+<text x="400" y="34" text-anchor="middle" font-size="18" font-weight="bold">A typical interview loop, step by step</text>
+<line x1="40" y1="117" x2="40" y2="179" stroke="#555" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="72" y="60" width="688" height="84" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="40" cy="102" r="15" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="40" y="107" text-anchor="middle" font-weight="bold">1</text>
+<text x="88" y="85" font-size="15" font-weight="bold">Resume and recruiter call</text>
+<text x="88" y="110"><tspan font-weight="bold">They test: </tspan>fit, notice period, expectations</text>
+<text x="88" y="132"><tspan font-weight="bold">You prepare: </tspan>resume and pitch (08/01)</text>
+<line x1="40" y1="211" x2="40" y2="273" stroke="#555" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="72" y="154" width="688" height="84" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="40" cy="196" r="15" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="40" y="201" text-anchor="middle" font-weight="bold">2</text>
+<text x="88" y="179" font-size="15" font-weight="bold">Online or phone screen</text>
+<text x="88" y="204"><tspan font-weight="bold">They test: </tspan>Go basics and one DSA problem</text>
+<text x="88" y="226"><tspan font-weight="bold">You prepare: </tspan>01, 02, 04</text>
+<line x1="40" y1="305" x2="40" y2="367" stroke="#555" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="72" y="248" width="688" height="84" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="40" cy="290" r="15" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="40" y="295" text-anchor="middle" font-weight="bold">3</text>
+<text x="88" y="273" font-size="15" font-weight="bold">Technical round 1</text>
+<text x="88" y="298"><tspan font-weight="bold">They test: </tspan>Go deep dive, find a bug in code: goroutines, channels, context</text>
+<text x="88" y="320"><tspan font-weight="bold">You prepare: </tspan>01, 02, 03</text>
+<line x1="40" y1="399" x2="40" y2="461" stroke="#555" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="72" y="342" width="688" height="84" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="40" cy="384" r="15" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="40" y="389" text-anchor="middle" font-weight="bold">4</text>
+<text x="88" y="367" font-size="15" font-weight="bold">Coding round</text>
+<text x="88" y="392"><tspan font-weight="bold">They test: </tspan>one or two easy to medium problems; talk out loud, test with examples</text>
+<text x="88" y="414"><tspan font-weight="bold">You prepare: </tspan>04</text>
+<line x1="40" y1="493" x2="40" y2="555" stroke="#555" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="72" y="436" width="688" height="84" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="40" cy="478" r="15" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="40" y="483" text-anchor="middle" font-weight="bold">5</text>
+<text x="88" y="461" font-size="15" font-weight="bold">Design round</text>
+<text x="88" y="486"><tspan font-weight="bold">They test: </tspan>HLD framework in five steps, or LLD with interfaces</text>
+<text x="88" y="508"><tspan font-weight="bold">You prepare: </tspan>05, 06</text>
+<line x1="40" y1="587" x2="40" y2="649" stroke="#555" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="72" y="530" width="688" height="84" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="40" cy="572" r="15" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="40" y="577" text-anchor="middle" font-weight="bold">6</text>
+<text x="88" y="555" font-size="15" font-weight="bold">Project deep dive</text>
+<text x="88" y="580"><tspan font-weight="bold">They test: </tspan>your own platform, trade-offs, failures</text>
+<text x="88" y="602"><tspan font-weight="bold">You prepare: </tspan>05/13, 08/01</text>
+<line x1="40" y1="681" x2="40" y2="743" stroke="#555" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="72" y="624" width="688" height="84" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<circle cx="40" cy="666" r="15" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="40" y="671" text-anchor="middle" font-weight="bold">7</text>
+<text x="88" y="649" font-size="15" font-weight="bold">Hiring manager and behavioral</text>
+<text x="88" y="674"><tspan font-weight="bold">They test: </tspan>STAR stories, why this team</text>
+<text x="88" y="696"><tspan font-weight="bold">You prepare: </tspan>08/02</text>
+<rect x="72" y="718" width="688" height="84" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<circle cx="40" cy="760" r="15" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<text x="40" y="765" text-anchor="middle" font-weight="bold">8</text>
+<text x="88" y="743" font-size="15" font-weight="bold">Offer</text>
+<text x="88" y="768"><tspan font-weight="bold">They test: </tspan>compare offers, negotiate calmly</text>
+<text x="88" y="790"><tspan font-weight="bold">You prepare: </tspan>a market range you researched yourself</text>
+<rect x="72" y="818" width="688" height="44" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+<text x="416" y="845" text-anchor="middle" font-size="15" font-weight="bold">Every round: clarify, think aloud, state trade-offs, test your answer</text>
+<rect x="72" y="874" width="688" height="44" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<text x="416" y="901" text-anchor="middle" font-size="15" font-weight="bold">Ask them: on-call, team size, tech debt, growth</text>
+<text x="400" y="944" text-anchor="middle">Numbers = repo sections: 01 Go basics, 02 concurrency, 03 runtime, 04 DSA, 05 HLD, 06 LLD, 08 resume.</text>
+<text x="400" y="964" text-anchor="middle">Loops differ by company. This is a typical shape, not a rule.</text>
+</svg>

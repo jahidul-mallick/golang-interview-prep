@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Context tree: cancel() stops the node and its children, not the parent or siblings</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="450" fill="#FFFFFF"/>
+
+  <text x="400" y="24" text-anchor="middle" font-size="16" font-weight="bold">Scenario: cancel() is called on the query context</text>
+
+  <rect x="290" y="40" width="220" height="56" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="400" y="64" text-anchor="middle" font-weight="bold">context.Background()</text>
+  <text x="400" y="84" text-anchor="middle">root, never cancelled</text>
+
+  <line x1="400" y1="96" x2="400" y2="130" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="270" y="134" width="260" height="62" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="400" y="158" text-anchor="middle" font-weight="bold">WithTimeout(parent, 2s)</text>
+  <text x="400" y="178" text-anchor="middle">request context, still alive</text>
+
+  <line x1="340" y1="196" x2="200" y2="244" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="460" y1="196" x2="600" y2="244" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="248" width="280" height="62" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="200" y="272" text-anchor="middle" font-weight="bold">WithCancel(request)</text>
+  <text x="200" y="292" text-anchor="middle">query context: cancel() called here</text>
+
+  <rect x="460" y="248" width="280" height="62" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="600" y="272" text-anchor="middle" font-weight="bold">WithValue(request, id)</text>
+  <text x="600" y="292" text-anchor="middle">sibling branch: unaffected</text>
+
+  <line x1="200" y1="310" x2="200" y2="344" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="600" y1="310" x2="600" y2="344" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="348" width="280" height="52" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="200" y="370" text-anchor="middle" font-weight="bold">DB query goroutine</text>
+  <text x="200" y="390" text-anchor="middle">Done() closed, ctx.Err() = Canceled</text>
+
+  <rect x="460" y="348" width="280" height="52" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="600" y="370" text-anchor="middle" font-weight="bold">RPC goroutine</text>
+  <text x="600" y="390" text-anchor="middle">keeps running</text>
+
+  <text x="400" y="430" text-anchor="middle">Cancel flows down to children only. Parents and siblings are not affected.</text>
+</svg>

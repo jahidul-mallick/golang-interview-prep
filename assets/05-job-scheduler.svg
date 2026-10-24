@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+  <title>Distributed job scheduler: schedulers claim due jobs with SKIP LOCKED, workers run them, retry and dead-letter</title>
+  <rect x="0" y="0" width="800" height="400" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="30" font-size="16" font-weight="bold">Distributed job scheduler</text>
+
+  <!-- Row 1 -->
+  <rect x="30" y="55" width="180" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="120" y="88" text-anchor="middle" font-weight="bold">API</text>
+  <text x="120" y="110" text-anchor="middle">POST /jobs {cron}</text>
+
+  <rect x="310" y="55" width="180" height="80" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="400" y="80" text-anchor="middle" font-weight="bold">Jobs table</text>
+  <text x="400" y="101" text-anchor="middle">next_run_at, status,</text>
+  <text x="400" y="119" text-anchor="middle">attempts, heartbeat_at</text>
+
+  <rect x="590" y="55" width="180" height="80" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="680" y="80" text-anchor="middle" font-weight="bold">Schedulers (many)</text>
+  <text x="680" y="101" text-anchor="middle">SELECT due rows FOR</text>
+  <text x="680" y="119" text-anchor="middle">UPDATE SKIP LOCKED</text>
+
+  <!-- Row 2 -->
+  <rect x="30" y="215" width="180" height="80" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="120" y="248" text-anchor="middle" font-weight="bold">Dead-letter</text>
+  <text x="120" y="270" text-anchor="middle">failed, alert a human</text>
+
+  <rect x="310" y="215" width="180" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="400" y="248" text-anchor="middle" font-weight="bold">Workers</text>
+  <text x="400" y="270" text-anchor="middle">run job, send heartbeat</text>
+
+  <rect x="590" y="215" width="180" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="680" y="248" text-anchor="middle" font-weight="bold">Queue</text>
+  <text x="680" y="270" text-anchor="middle">claimed job ids</text>
+
+  <!-- Arrows -->
+  <g stroke="#555555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="210" y1="95" x2="308" y2="95"/>
+    <line x1="590" y1="95" x2="492" y2="95"/>
+    <line x1="680" y1="135" x2="680" y2="213"/>
+    <line x1="590" y1="255" x2="492" y2="255"/>
+    <line x1="400" y1="215" x2="400" y2="137"/>
+    <line x1="310" y1="255" x2="212" y2="255"/>
+  </g>
+  <g text-anchor="middle">
+    <text x="260" y="86">insert</text>
+    <text x="540" y="84">claim</text>
+    <text x="540" y="115">due rows</text>
+    <text x="541" y="246">pull</text>
+    <text x="261" y="246">max</text>
+    <text x="261" y="278">attempts</text>
+  </g>
+  <text x="696" y="180">enqueue</text>
+  <text x="414" y="170">done, or retry:</text>
+  <text x="414" y="188">new next_run_at</text>
+  <text x="414" y="206">(backoff)</text>
+
+  <!-- Note -->
+  <rect x="30" y="330" width="740" height="44" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="44" y="357">Watchdog: heartbeat stops, so the job goes back to pending. Runs are at-least-once, so jobs must be idempotent.</text>
+</svg>

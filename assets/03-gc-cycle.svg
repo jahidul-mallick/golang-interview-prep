@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 935" width="800" height="935" font-family="Arial, Helvetica, sans-serif" fill="#1B1F24">
+  <title>One Go GC cycle from allocation to sweep</title>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="935" fill="#FFFFFF"/>
+  <text x="50" y="34" font-size="18" font-weight="bold">One GC cycle, from allocation to sweep</text>
+
+  <!-- arrows between steps -->
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#arr)">
+    <line x1="290" y1="137" x2="290" y2="165"/>
+    <line x1="290" y1="269" x2="290" y2="297"/>
+    <line x1="290" y1="381" x2="290" y2="409"/>
+    <line x1="290" y1="533" x2="290" y2="561"/>
+    <line x1="290" y1="645" x2="290" y2="673"/>
+    <line x1="290" y1="777" x2="290" y2="805"/>
+    <path d="M50,857 H28 V95 H48"/>
+  </g>
+
+  <!-- 1 -->
+  <rect x="50" y="55" width="480" height="80" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="82" cy="78" r="14" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="82" y="83" font-size="14" font-weight="bold" text-anchor="middle">1</text>
+  <text x="108" y="83" font-size="15" font-weight="bold">Your code allocates</text>
+  <text x="108" y="107" font-size="14">Goroutines allocate objects on the heap,</text>
+  <text x="108" y="127" font-size="14">so the heap grows.</text>
+
+  <!-- 2 -->
+  <rect x="50" y="167" width="480" height="100" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <circle cx="82" cy="190" r="14" fill="#FFFFFF" stroke="#E0A100" stroke-width="2"/>
+  <text x="82" y="195" font-size="14" font-weight="bold" text-anchor="middle">2</text>
+  <text x="108" y="195" font-size="15" font-weight="bold">Trigger: when does a GC start?</text>
+  <text x="108" y="219" font-size="14">The heap reaches the target set by GOGC</text>
+  <text x="108" y="239" font-size="14">(default 100: next target is about live heap x 2)</text>
+  <text x="108" y="259" font-size="14">GOMEMLIMIT (soft limit) can start GC earlier</text>
+
+  <!-- 3 -->
+  <rect x="50" y="299" width="480" height="80" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <circle cx="82" cy="322" r="14" fill="#FFFFFF" stroke="#D13B3B" stroke-width="2"/>
+  <text x="82" y="327" font-size="14" font-weight="bold" text-anchor="middle">3</text>
+  <text x="108" y="327" font-size="15" font-weight="bold">Sweep termination (stop-the-world)</text>
+  <text x="108" y="351" font-size="14">A very short pause</text>
+  <text x="108" y="371" font-size="14">The write barrier is turned on</text>
+
+  <!-- 4 -->
+  <rect x="50" y="411" width="480" height="120" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <circle cx="82" cy="434" r="14" fill="#FFFFFF" stroke="#2E9E44" stroke-width="2"/>
+  <text x="82" y="439" font-size="14" font-weight="bold" text-anchor="middle">4</text>
+  <text x="108" y="439" font-size="15" font-weight="bold">Concurrent mark</text>
+  <text x="108" y="463" font-size="14">GC workers run alongside your goroutines</text>
+  <text x="108" y="483" font-size="14">(the GC aims at roughly a quarter of the CPU)</text>
+  <text x="108" y="503" font-size="14">Fast allocators are made to help: mark assist</text>
+  <text x="108" y="523" font-size="14">Objects go white, then grey, then black</text>
+  <circle cx="470" cy="470" r="10" fill="#FFFFFF" stroke="#1B1F24" stroke-width="2"/>
+  <circle cx="494" cy="470" r="10" fill="#BDBDBD" stroke="#1B1F24" stroke-width="2"/>
+  <circle cx="518" cy="470" r="10" fill="#1B1F24" stroke="#1B1F24" stroke-width="2"/>
+
+  <!-- 5 -->
+  <rect x="50" y="563" width="480" height="80" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <circle cx="82" cy="586" r="14" fill="#FFFFFF" stroke="#D13B3B" stroke-width="2"/>
+  <text x="82" y="591" font-size="14" font-weight="bold" text-anchor="middle">5</text>
+  <text x="108" y="591" font-size="15" font-weight="bold">Mark termination (stop-the-world)</text>
+  <text x="108" y="615" font-size="14">A very short pause</text>
+  <text x="108" y="635" font-size="14">The write barrier is turned off</text>
+
+  <!-- 6 -->
+  <rect x="50" y="675" width="480" height="100" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <circle cx="82" cy="698" r="14" fill="#FFFFFF" stroke="#2E9E44" stroke-width="2"/>
+  <text x="82" y="703" font-size="14" font-weight="bold" text-anchor="middle">6</text>
+  <text x="108" y="703" font-size="15" font-weight="bold">Concurrent sweep</text>
+  <text x="108" y="727" font-size="14">Unreachable (white) memory is freed for reuse</text>
+  <text x="108" y="747" font-size="14">Done lazily, as allocation needs the space</text>
+  <text x="108" y="767" font-size="14">Your goroutines keep running</text>
+
+  <!-- 7 -->
+  <rect x="50" y="807" width="480" height="100" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="82" cy="830" r="14" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="82" y="835" font-size="14" font-weight="bold" text-anchor="middle">7</text>
+  <text x="108" y="835" font-size="15" font-weight="bold">Measure and set the next target</text>
+  <text x="108" y="859" font-size="14">The new live heap size is measured</text>
+  <text x="108" y="879" font-size="14">The next GC target is set from it</text>
+  <text x="108" y="899" font-size="14">Loop back to step 1</text>
+
+  <!-- tuning box -->
+  <line x1="530" y1="217" x2="555" y2="217" stroke="#555" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="555" y="167" width="225" height="285" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="569" y="195" font-size="15" font-weight="bold">Tuning</text>
+  <text x="569" y="223" font-size="14">Raise GOGC: fewer GCs,</text>
+  <text x="569" y="243" font-size="14">more memory. Lower GOGC:</text>
+  <text x="569" y="263" font-size="14">the opposite.</text>
+  <text x="569" y="291" font-size="14">GOMEMLIMIT: for containers</text>
+  <text x="569" y="311" font-size="14">(a soft limit).</text>
+  <text x="569" y="339" font-size="14">Best fix: allocate less</text>
+  <text x="569" y="359" font-size="14">(escape analysis, sync.Pool,</text>
+  <text x="569" y="379" font-size="14">pre-size slices).</text>
+  <text x="569" y="407" font-size="14">Observe: GODEBUG=gctrace=1</text>
+  <text x="569" y="427" font-size="14">and pprof.</text>
+
+  <!-- legend -->
+  <rect x="555" y="480" width="16" height="16" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="579" y="494" font-size="13">Stop-the-world (very short)</text>
+  <rect x="555" y="508" width="16" height="16" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="579" y="522" font-size="13">Runs alongside your code</text>
+</svg>

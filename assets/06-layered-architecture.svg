@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="Arial, Helvetica, sans-serif" fill="#1B1F24">
+  <title>Layered architecture: handler, service, repository, database, wired in main</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="400" fill="#FFFFFF"/>
+  <text x="16" y="30" font-size="16" font-weight="bold">Layered architecture: a request flows right, dependencies are injected</text>
+
+  <rect x="16" y="60" width="136" height="90" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="84" y="92" font-size="15" font-weight="bold" text-anchor="middle">Client</text>
+  <text x="84" y="116" font-size="13" text-anchor="middle">HTTP request</text>
+
+  <rect x="174" y="60" width="136" height="90" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="242" y="86" font-size="15" font-weight="bold" text-anchor="middle">Handler</text>
+  <text x="242" y="108" font-size="13" text-anchor="middle">parse request</text>
+  <text x="242" y="126" font-size="13" text-anchor="middle">map errors to</text>
+  <text x="242" y="142" font-size="13" text-anchor="middle">status codes</text>
+
+  <rect x="332" y="60" width="136" height="90" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="400" y="86" font-size="15" font-weight="bold" text-anchor="middle">Service</text>
+  <text x="400" y="108" font-size="13" text-anchor="middle">business rules</text>
+  <text x="400" y="126" font-size="13" text-anchor="middle">no HTTP, no SQL</text>
+
+  <rect x="490" y="60" width="136" height="90" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="558" y="86" font-size="15" font-weight="bold" text-anchor="middle">Repository</text>
+  <text x="558" y="108" font-size="13" text-anchor="middle">SQL / storage</text>
+  <text x="558" y="126" font-size="13" text-anchor="middle">implements the</text>
+  <text x="558" y="142" font-size="13" text-anchor="middle">interface</text>
+
+  <rect x="648" y="60" width="136" height="90" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="716" y="92" font-size="15" font-weight="bold" text-anchor="middle">Database</text>
+  <text x="716" y="116" font-size="13" text-anchor="middle">Postgres, etc.</text>
+
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="152" y1="105" x2="172" y2="105"/>
+    <line x1="310" y1="105" x2="330" y2="105"/>
+    <line x1="468" y1="105" x2="488" y2="105"/>
+    <line x1="626" y1="105" x2="646" y2="105"/>
+  </g>
+
+  <rect x="372" y="190" width="254" height="50" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="499" y="212" font-size="14" font-weight="bold" text-anchor="middle">interface UserRepo</text>
+  <text x="499" y="231" font-size="13" text-anchor="middle">defined next to the Service</text>
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="400" y1="150" x2="400" y2="188"/>
+    <line x1="558" y1="150" x2="558" y2="188"/>
+  </g>
+  <text x="408" y="174" font-size="13">uses</text>
+  <text x="566" y="174" font-size="13">implements</text>
+
+  <rect x="16" y="300" width="768" height="60" rx="6" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="400" y="326" font-size="15" font-weight="bold" text-anchor="middle">main(): composition root</text>
+  <text x="400" y="347" font-size="13" text-anchor="middle">The only place that knows concrete types. Builds repo, service, handler and wires them.</text>
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="242" y1="300" x2="242" y2="152"/>
+    <line x1="345" y1="300" x2="345" y2="152"/>
+    <line x1="620" y1="300" x2="620" y2="152"/>
+  </g>
+  <text x="234" y="280" font-size="13" text-anchor="end">injects dependencies</text>
+</svg>

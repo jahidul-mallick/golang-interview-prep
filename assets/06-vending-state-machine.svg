@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="Arial, Helvetica, sans-serif" fill="#1B1F24">
+  <title>Vending machine state machine: Idle, HasMoney, Dispensing</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="400" fill="#FFFFFF"/>
+  <text x="16" y="30" font-size="16" font-weight="bold">Vending machine: states and events</text>
+
+  <rect x="60" y="170" width="160" height="70" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="140" y="212" font-size="16" font-weight="bold" text-anchor="middle">Idle</text>
+
+  <rect x="320" y="170" width="160" height="70" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="400" y="212" font-size="16" font-weight="bold" text-anchor="middle">HasMoney</text>
+
+  <rect x="580" y="170" width="160" height="70" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="660" y="212" font-size="16" font-weight="bold" text-anchor="middle">Dispensing</text>
+
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="220" y1="205" x2="318" y2="205"/>
+    <line x1="480" y1="205" x2="578" y2="205"/>
+    <path d="M360,170 C360,110 440,110 440,168"/>
+    <path d="M360,240 L360,285 L180,285 L180,242"/>
+    <path d="M660,240 L660,330 L100,330 L100,242"/>
+  </g>
+  <text x="269" y="195" font-size="13" text-anchor="middle">insert_coin</text>
+  <text x="529" y="195" font-size="13" text-anchor="middle">select</text>
+  <text x="529" y="226" font-size="13" text-anchor="middle">price met</text>
+  <text x="400" y="104" font-size="13" text-anchor="middle">insert_coin (add balance)</text>
+  <text x="270" y="277" font-size="13" text-anchor="middle">cancel: refund</text>
+  <text x="380" y="322" font-size="13" text-anchor="middle">done: give item and change</text>
+
+  <text x="16" y="372" font-size="13">Table: map[State]map[Event]State. A missing entry is an illegal transition and returns an error.</text>
+</svg>

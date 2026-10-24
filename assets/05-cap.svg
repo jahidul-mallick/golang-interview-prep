@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1B1F24">
+  <title>CAP: choosing consistency or availability during a network partition</title>
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="400" fill="#FFFFFF"/>
+
+  <rect x="60" y="40" width="160" height="60" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="140" y="75" text-anchor="middle">Node A</text>
+  <rect x="580" y="40" width="160" height="60" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="660" y="75" text-anchor="middle">Node B</text>
+
+  <g stroke="#D13B3B" stroke-width="3" stroke-dasharray="8 6">
+    <line x1="220" y1="70" x2="330" y2="70"/>
+    <line x1="470" y1="70" x2="580" y2="70"/>
+  </g>
+  <rect x="330" y="50" width="140" height="40" rx="6" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="400" y="75" text-anchor="middle">Partition</text>
+
+  <rect x="250" y="140" width="300" height="56" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="400" y="164" text-anchor="middle">A write reaches Node A</text>
+  <text x="400" y="184" text-anchor="middle">Node B cannot be reached</text>
+
+  <rect x="40" y="260" width="330" height="110" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="205" y="288" text-anchor="middle" font-weight="bold">Choose consistency (CP)</text>
+  <text x="205" y="312" text-anchor="middle">Reject or wait until B is back</text>
+  <text x="205" y="332" text-anchor="middle">No stale reads, less available</text>
+  <text x="205" y="352" text-anchor="middle">Example: etcd</text>
+
+  <rect x="430" y="260" width="330" height="110" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="595" y="288" text-anchor="middle" font-weight="bold">Choose availability (AP)</text>
+  <text x="595" y="312" text-anchor="middle">Accept the write, sync later</text>
+  <text x="595" y="332" text-anchor="middle">Always answers, may be stale</text>
+  <text x="595" y="352" text-anchor="middle">Example: Cassandra</text>
+
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#a)">
+    <line x1="330" y1="196" x2="230" y2="258"/>
+    <line x1="470" y1="196" x2="570" y2="258"/>
+  </g>
+</svg>

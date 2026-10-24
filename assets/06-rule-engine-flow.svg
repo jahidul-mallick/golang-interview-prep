@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" font-family="Arial, Helvetica, sans-serif" fill="#1B1F24">
+  <title>Rule engine flow: load and validate rules, swap into engine, evaluate facts, return actions</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="380" fill="#FFFFFF"/>
+  <text x="16" y="30" font-size="16" font-weight="bold">Rule engine: load once, evaluate many times</text>
+
+  <rect x="20" y="60" width="160" height="90" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="100" y="86" font-size="15" font-weight="bold" text-anchor="middle">Rules (JSON)</text>
+  <text x="100" y="108" font-size="13" text-anchor="middle">id, priority,</text>
+  <text x="100" y="126" font-size="13" text-anchor="middle">when, action</text>
+
+  <rect x="220" y="60" width="160" height="90" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="300" y="86" font-size="15" font-weight="bold" text-anchor="middle">LoadRules</text>
+  <text x="300" y="108" font-size="13" text-anchor="middle">validate, build tree</text>
+  <text x="300" y="126" font-size="13" text-anchor="middle">sort by priority</text>
+
+  <rect x="420" y="60" width="160" height="90" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="500" y="86" font-size="15" font-weight="bold" text-anchor="middle">Engine</text>
+  <text x="500" y="108" font-size="13" text-anchor="middle">atomic.Pointer to</text>
+  <text x="500" y="126" font-size="13" text-anchor="middle">immutable rules</text>
+
+  <rect x="220" y="220" width="160" height="90" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="300" y="246" font-size="15" font-weight="bold" text-anchor="middle">Facts</text>
+  <text x="300" y="268" font-size="13" text-anchor="middle">map[string]any</text>
+  <text x="300" y="286" font-size="13" text-anchor="middle">for one event</text>
+
+  <rect x="420" y="220" width="160" height="90" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="500" y="246" font-size="15" font-weight="bold" text-anchor="middle">Evaluate</text>
+  <text x="500" y="268" font-size="13" text-anchor="middle">walk rules in order</text>
+  <text x="500" y="286" font-size="13" text-anchor="middle">first or all matches</text>
+
+  <rect x="620" y="220" width="160" height="90" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="700" y="246" font-size="15" font-weight="bold" text-anchor="middle">Matches</text>
+  <text x="700" y="268" font-size="13" text-anchor="middle">rule id + action</text>
+  <text x="700" y="286" font-size="13" text-anchor="middle">run elsewhere</text>
+
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="180" y1="105" x2="218" y2="105"/>
+    <line x1="380" y1="105" x2="418" y2="105"/>
+    <line x1="500" y1="150" x2="500" y2="218"/>
+    <line x1="380" y1="265" x2="418" y2="265"/>
+    <line x1="580" y1="265" x2="618" y2="265"/>
+  </g>
+  <text x="399" y="94" font-size="13" text-anchor="middle">Swap</text>
+  <text x="508" y="190" font-size="13">Load()</text>
+
+  <text x="16" y="352" font-size="13">Condition tree: And, Or, Not around Compare(field, op, value). A missing fact means no match.</text>
+</svg>

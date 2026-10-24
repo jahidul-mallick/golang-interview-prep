@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 888" width="800" height="888" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+  <title>Typical scalable backend architecture, end to end</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="888" fill="#FFFFFF"/>
+
+  <!-- Main request path -->
+  <rect x="40" y="20" width="520" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="1.5"/>
+  <text x="300" y="39" text-anchor="middle" font-weight="bold">Clients</text>
+  <text x="300" y="56" text-anchor="middle">web browsers, mobile apps</text>
+
+  <rect x="40" y="86" width="520" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="1.5"/>
+  <text x="300" y="105" text-anchor="middle" font-weight="bold">DNS</text>
+  <text x="300" y="122" text-anchor="middle">resolves the name to the nearest entry point</text>
+
+  <rect x="40" y="152" width="520" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="1.5"/>
+  <text x="300" y="171" text-anchor="middle" font-weight="bold">CDN</text>
+  <text x="300" y="188" text-anchor="middle">static files, cached responses</text>
+
+  <rect x="40" y="218" width="520" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="1.5"/>
+  <text x="300" y="237" text-anchor="middle" font-weight="bold">Load balancer</text>
+  <text x="300" y="254" text-anchor="middle">health checks, TLS termination</text>
+
+  <rect x="40" y="284" width="520" height="44" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="1.5"/>
+  <text x="300" y="303" text-anchor="middle" font-weight="bold">API gateway</text>
+  <text x="300" y="320" text-anchor="middle">auth, rate limit, routing</text>
+
+  <rect x="40" y="350" width="520" height="84" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="1.5"/>
+  <text x="300" y="370" text-anchor="middle" font-weight="bold">Stateless Go services, several replicas</text>
+  <text x="300" y="386" text-anchor="middle" font-size="13">horizontal scaling: add replicas, no local state</text>
+  <rect x="60" y="394" width="150" height="30" rx="4" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="1.2"/>
+  <text x="135" y="414" text-anchor="middle">Go replica 1</text>
+  <rect x="225" y="394" width="150" height="30" rx="4" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="1.2"/>
+  <text x="300" y="414" text-anchor="middle">Go replica 2</text>
+  <rect x="390" y="394" width="150" height="30" rx="4" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="1.2"/>
+  <text x="465" y="414" text-anchor="middle">Go replica N</text>
+
+  <!-- Arrows down the main path -->
+  <g stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arrow)">
+    <path d="M300,64 L300,85"/>
+    <path d="M300,130 L300,151"/>
+    <path d="M300,196 L300,217"/>
+    <path d="M300,262 L300,283"/>
+    <path d="M300,328 L300,349"/>
+  </g>
+
+  <!-- Fan-out to three paths -->
+  <g stroke="#555" stroke-width="1.6" fill="none">
+    <path d="M300,434 L300,456"/>
+    <path d="M133,456 L665,456"/>
+  </g>
+  <g stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arrow)">
+    <path d="M133,456 L133,479"/>
+    <path d="M399,456 L399,479"/>
+    <path d="M665,456 L665,479"/>
+  </g>
+
+  <!-- Right side: scale order (green) -->
+  <rect x="585" y="20" width="195" height="122" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="1.5"/>
+  <text x="682" y="42" text-anchor="middle" font-weight="bold">Scale in this order</text>
+  <text x="600" y="68">1. Cache</text>
+  <text x="600" y="88">2. Read replicas</text>
+  <text x="600" y="108">3. Async work via queues</text>
+  <text x="600" y="128">4. Then sharding</text>
+
+  <!-- Red tag: load balancer -->
+  <line x1="560" y1="240" x2="585" y2="240" stroke="#D13B3B" stroke-width="1.5"/>
+  <rect x="585" y="226" width="195" height="28" rx="4" fill="#FDE7E7" stroke="#D13B3B" stroke-width="1.2"/>
+  <text x="682" y="245" text-anchor="middle">Single point of failure</text>
+
+  <!-- Path (a): cache -->
+  <rect x="20" y="480" width="226" height="70" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="1.5"/>
+  <text x="133" y="501" text-anchor="middle" font-weight="bold">Cache (Redis)</text>
+  <text x="133" y="522" text-anchor="middle">cache-aside: check cache first</text>
+  <text x="133" y="540" text-anchor="middle">miss: read DB, then fill cache</text>
+  <rect x="20" y="562" width="226" height="28" rx="4" fill="#FDE7E7" stroke="#D13B3B" stroke-width="1.2"/>
+  <text x="133" y="581" text-anchor="middle">Cache stampede</text>
+
+  <!-- miss arrow -->
+  <path d="M246,516 L285,516" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <text x="266" y="509" text-anchor="middle">miss</text>
+
+  <!-- Path (b): database -->
+  <rect x="286" y="480" width="226" height="188" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="1.5"/>
+  <text x="399" y="500" text-anchor="middle" font-weight="bold">Database</text>
+  <rect x="300" y="510" width="198" height="32" rx="4" fill="#FFFFFF" stroke="#E0A100" stroke-width="1.2"/>
+  <text x="399" y="531" text-anchor="middle">Primary: writes</text>
+  <path d="M399,542 L399,563" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <rect x="300" y="564" width="198" height="32" rx="4" fill="#FFFFFF" stroke="#E0A100" stroke-width="1.2"/>
+  <text x="399" y="585" text-anchor="middle">Read replicas: reads</text>
+  <rect x="300" y="612" width="198" height="44" rx="4" fill="#FFFFFF" stroke="#E0A100" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="399" y="631" text-anchor="middle">Shards (split by key)</text>
+  <text x="399" y="648" text-anchor="middle">if one primary is not enough</text>
+  <rect x="286" y="680" width="226" height="28" rx="4" fill="#FDE7E7" stroke="#D13B3B" stroke-width="1.2"/>
+  <text x="399" y="699" text-anchor="middle">Primary: single point of failure</text>
+  <rect x="286" y="716" width="226" height="28" rx="4" fill="#FDE7E7" stroke="#D13B3B" stroke-width="1.2"/>
+  <text x="399" y="735" text-anchor="middle">Hot partition: skewed shard</text>
+
+  <!-- Path (c): queue and workers -->
+  <rect x="552" y="480" width="226" height="46" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="1.5"/>
+  <text x="665" y="499" text-anchor="middle" font-weight="bold">Message queue (Kafka)</text>
+  <text x="665" y="517" text-anchor="middle">async, decouples slow work</text>
+  <path d="M665,526 L665,547" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <rect x="552" y="548" width="226" height="46" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="1.5"/>
+  <text x="665" y="567" text-anchor="middle" font-weight="bold">Background workers</text>
+  <text x="665" y="585" text-anchor="middle">consume messages, retry</text>
+  <path d="M665,594 L665,615" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <rect x="552" y="616" width="226" height="84" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="1.5"/>
+  <text x="665" y="639" text-anchor="middle">Object storage</text>
+  <text x="665" y="660" text-anchor="middle">Search index</text>
+  <text x="665" y="681" text-anchor="middle">Email and push</text>
+  <rect x="552" y="712" width="226" height="28" rx="4" fill="#FDE7E7" stroke="#D13B3B" stroke-width="1.2"/>
+  <text x="665" y="731" text-anchor="middle">Slow consumers: queue lag</text>
+
+  <!-- Bottom band -->
+  <rect x="20" y="768" width="760" height="102" rx="6" fill="#FFFFFF" stroke="#555" stroke-width="1.3" stroke-dasharray="6 4"/>
+  <text x="400" y="789" text-anchor="middle" font-weight="bold">Cross-cutting: covers every tier above</text>
+  <rect x="36" y="800" width="362" height="52" rx="4" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="1.5"/>
+  <text x="217" y="821" text-anchor="middle" font-weight="bold">Observability</text>
+  <text x="217" y="840" text-anchor="middle">metrics, logs, traces, alerts</text>
+  <rect x="402" y="800" width="362" height="52" rx="4" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="1.5"/>
+  <text x="583" y="821" text-anchor="middle" font-weight="bold">Config, secrets and CI/CD</text>
+  <text x="583" y="840" text-anchor="middle">secret store, canary deploys, rollback</text>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" width="800" height="340" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>BFS visits level by level with a queue; DFS goes deep first with a stack</title>
+  <rect width="800" height="340" fill="#ffffff"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+  </defs>
+  <text x="200" y="28" font-size="16" font-weight="bold" text-anchor="middle">BFS (queue)</text>
+  <text x="600" y="28" font-size="16" font-weight="bold" text-anchor="middle">DFS (stack / recursion)</text>
+
+  <g stroke="#555555" stroke-width="1.5" marker-end="url(#a)" fill="none">
+    <line x1="190" y1="76" x2="130" y2="124"/>
+    <line x1="210" y1="76" x2="270" y2="124"/>
+    <line x1="112" y1="162" x2="88" y2="204"/>
+    <line x1="128" y1="162" x2="172" y2="204"/>
+    <line x1="280" y1="163" x2="272" y2="204"/>
+  </g>
+  <g stroke-width="2" text-anchor="middle">
+    <circle cx="200" cy="60" r="18" fill="#E8F1FF" stroke="#2F6FDE"/><text x="200" y="65" stroke="none">A</text>
+    <circle cx="120" cy="145" r="18" fill="#FFF3D6" stroke="#E0A100"/><text x="120" y="150" stroke="none">B</text>
+    <circle cx="280" cy="145" r="18" fill="#FFF3D6" stroke="#E0A100"/><text x="280" y="150" stroke="none">C</text>
+    <circle cx="80" cy="225" r="18" fill="#E3F6E5" stroke="#2E9E44"/><text x="80" y="230" stroke="none">D</text>
+    <circle cx="180" cy="225" r="18" fill="#E3F6E5" stroke="#2E9E44"/><text x="180" y="230" stroke="none">E</text>
+    <circle cx="270" cy="225" r="18" fill="#E3F6E5" stroke="#2E9E44"/><text x="270" y="230" stroke="none">F</text>
+  </g>
+  <text x="200" y="272" text-anchor="middle">Order: A, B, C, D, E, F</text>
+  <text x="200" y="296" text-anchor="middle">Shortest path in steps</text>
+  <text x="200" y="318" text-anchor="middle">(one level = one step)</text>
+
+  <line x1="400" y1="45" x2="400" y2="325" stroke="#cccccc" stroke-width="1"/>
+
+  <g stroke="#555555" stroke-width="1.5" marker-end="url(#a)" fill="none">
+    <line x1="590" y1="76" x2="530" y2="124"/>
+    <line x1="610" y1="76" x2="670" y2="124"/>
+    <line x1="512" y1="162" x2="488" y2="204"/>
+    <line x1="528" y1="162" x2="572" y2="204"/>
+    <line x1="680" y1="163" x2="672" y2="204"/>
+  </g>
+  <g stroke-width="2" text-anchor="middle">
+    <circle cx="600" cy="60" r="18" fill="#E8F1FF" stroke="#2F6FDE"/><text x="600" y="65" stroke="none">A</text>
+    <circle cx="520" cy="145" r="18" fill="#FDE7E7" stroke="#D13B3B"/><text x="520" y="150" stroke="none">B</text>
+    <circle cx="680" cy="145" r="18" fill="#FDE7E7" stroke="#D13B3B"/><text x="680" y="150" stroke="none">C</text>
+    <circle cx="480" cy="225" r="18" fill="#FDE7E7" stroke="#D13B3B"/><text x="480" y="230" stroke="none">D</text>
+    <circle cx="580" cy="225" r="18" fill="#FDE7E7" stroke="#D13B3B"/><text x="580" y="230" stroke="none">E</text>
+    <circle cx="670" cy="225" r="18" fill="#FDE7E7" stroke="#D13B3B"/><text x="670" y="230" stroke="none">F</text>
+  </g>
+  <text x="600" y="272" text-anchor="middle">Order: A, B, D, E, C, F</text>
+  <text x="600" y="296" text-anchor="middle">Connected regions, cycles,</text>
+  <text x="600" y="318" text-anchor="middle">paths, backtracking</text>
+</svg>

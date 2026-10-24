@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" width="800" height="320" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Deferred calls run last-in-first-out after return sets the named result</title>
+  <rect width="800" height="320" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <text x="300" y="35" font-weight="bold">Deferred stack, popped top first</text>
+
+  <rect x="20" y="118" width="180" height="80" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="110" y="153" text-anchor="middle" font-weight="bold">return 5</text>
+  <text x="110" y="177" text-anchor="middle">sets named n = 5</text>
+
+  <path d="M200,158 L296,158" fill="none" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="300" y="55" width="270" height="56" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="435" y="89" text-anchor="middle">1st: func(){ n *= 2 }  (n = 10)</text>
+  <rect x="300" y="125" width="270" height="56" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="435" y="159" text-anchor="middle">2nd: fmt.Println("B")</text>
+  <rect x="300" y="195" width="270" height="56" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="435" y="229" text-anchor="middle">3rd: fmt.Println("A")</text>
+
+  <path d="M570,158 L616,158" fill="none" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="620" y="118" width="160" height="80" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="700" y="153" text-anchor="middle" font-weight="bold">caller gets</text>
+  <text x="700" y="177" text-anchor="middle">n = 10</text>
+
+  <text x="30" y="290">Registered in order: A, B, closure. Run in reverse: closure, B, A.</text>
+</svg>

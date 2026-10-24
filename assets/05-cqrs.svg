@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 670" width="800" height="670" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+  <title>CQRS: separate the write side from the read side</title>
+  <rect x="0" y="0" width="800" height="670" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="30" font-size="16" font-weight="bold">CQRS: separate the write side from the read side</text>
+
+  <!-- Lane backgrounds -->
+  <rect x="20" y="50" width="760" height="126" rx="8" fill="#F5F9FF" stroke="#2F6FDE" stroke-width="1.5"/>
+  <rect x="20" y="190" width="760" height="172" rx="8" fill="#FFFBEF" stroke="#E0A100" stroke-width="1.5"/>
+  <rect x="20" y="376" width="760" height="136" rx="8" fill="#F4FBF5" stroke="#2E9E44" stroke-width="1.5"/>
+
+  <!-- Arrows -->
+  <g stroke="#555555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="170" y1="125" x2="248" y2="125"/>
+    <line x1="470" y1="125" x2="548" y2="125"/>
+    <line x1="655" y1="160" x2="655" y2="224"/>
+    <line x1="655" y1="276" x2="655" y2="298"/>
+    <line x1="655" y1="350" x2="655" y2="414"/>
+    <line x1="170" y1="456" x2="248" y2="456"/>
+    <line x1="470" y1="456" x2="548" y2="456"/>
+  </g>
+
+  <!-- Command side -->
+  <text x="40" y="74" font-weight="bold" fill="#2F6FDE">Command side (writes)</text>
+  <rect x="40" y="90" width="130" height="70" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="105" y="130" text-anchor="middle" font-weight="bold">Client</text>
+  <rect x="250" y="90" width="220" height="70" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="360" y="120" text-anchor="middle" font-weight="bold">Command API</text>
+  <text x="360" y="141" text-anchor="middle">validate, business rules</text>
+  <rect x="550" y="90" width="210" height="70" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="655" y="120" text-anchor="middle" font-weight="bold">Write database</text>
+  <text x="655" y="141" text-anchor="middle">normalised, source of truth</text>
+
+  <!-- Sync band -->
+  <text x="40" y="214" font-weight="bold" fill="#8A6500">Async sync between the two sides</text>
+  <text x="40" y="242">The write side saves the data and an</text>
+  <text x="40" y="261">outbox row in one transaction. A relay</text>
+  <text x="40" y="280">publishes the events to the broker.</text>
+  <text x="40" y="318">A projector applies each event to the</text>
+  <text x="40" y="337">read store.</text>
+  <text x="645" y="208" text-anchor="end">events (via outbox)</text>
+  <text x="645" y="293" text-anchor="end">consume</text>
+  <rect x="550" y="226" width="210" height="50" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="655" y="256" text-anchor="middle" font-weight="bold">Message broker</text>
+  <rect x="550" y="300" width="210" height="50" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="655" y="330" text-anchor="middle" font-weight="bold">Projector / consumer</text>
+
+  <!-- Query side -->
+  <text x="40" y="399" font-weight="bold" fill="#2E9E44">Query side (reads)</text>
+  <text x="645" y="397" text-anchor="end">updates the view</text>
+  <rect x="40" y="416" width="130" height="80" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="105" y="461" text-anchor="middle" font-weight="bold">Client</text>
+  <rect x="250" y="416" width="220" height="80" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="360" y="451" text-anchor="middle" font-weight="bold">Query API</text>
+  <text x="360" y="472" text-anchor="middle">no business rules, fast</text>
+  <rect x="550" y="416" width="210" height="80" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="655" y="440" text-anchor="middle" font-weight="bold">Read store</text>
+  <text x="655" y="460" text-anchor="middle">denormalised view: cache,</text>
+  <text x="655" y="479" text-anchor="middle">search index or read replica</text>
+
+  <!-- Notes -->
+  <rect x="20" y="530" width="760" height="36" rx="8" fill="#FFFFFF" stroke="#555555" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="34" y="553">Read side is eventually consistent: a read right after a write can be stale</text>
+  <rect x="20" y="576" width="760" height="36" rx="8" fill="#FFFFFF" stroke="#555555" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="34" y="599">Use when read and write shapes or load differ a lot; overkill for simple CRUD</text>
+  <rect x="20" y="622" width="760" height="36" rx="8" fill="#FFFFFF" stroke="#555555" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="34" y="645">Event sourcing is a separate, optional step: store the events themselves as the source of truth</text>
+</svg>

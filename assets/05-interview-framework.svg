@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 330" width="800" height="330" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+<title>System design interview in five steps with suggested minutes</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker></defs>
+<rect width="800" height="330" fill="#FFFFFF"/>
+<text x="400" y="28" text-anchor="middle" font-size="15" font-weight="bold">45-minute interview, five steps</text>
+<rect x="15" y="50" width="140" height="56" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="85" y="76" text-anchor="middle" font-size="14" font-weight="bold">1. Requirements</text>
+<text x="85" y="95" text-anchor="middle">0-5 min</text>
+<rect x="170" y="50" width="140" height="56" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<text x="240" y="76" text-anchor="middle" font-size="14" font-weight="bold">2. Estimates</text>
+<text x="240" y="95" text-anchor="middle">5-10 min</text>
+<rect x="325" y="50" width="140" height="56" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="395" y="76" text-anchor="middle" font-size="14" font-weight="bold">3. API + data</text>
+<text x="395" y="95" text-anchor="middle">10-20 min</text>
+<rect x="480" y="50" width="140" height="56" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+<text x="550" y="76" text-anchor="middle" font-size="14" font-weight="bold">4. Architecture</text>
+<text x="550" y="95" text-anchor="middle">20-35 min</text>
+<rect x="635" y="50" width="150" height="56" rx="6" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+<text x="710" y="76" text-anchor="middle" font-size="14" font-weight="bold">5. Trade-offs</text>
+<text x="710" y="95" text-anchor="middle">35-45 min</text>
+<line x1="155" y1="78" x2="168" y2="78" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="310" y1="78" x2="323" y2="78" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="465" y1="78" x2="478" y2="78" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="620" y1="78" x2="633" y2="78" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="15" y="120" width="140" height="110" rx="6" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="1.5"/>
+<text x="25" y="146">Core features</text>
+<text x="25" y="168">Scale, latency</text>
+<text x="25" y="190">Consistency needs</text>
+<text x="25" y="212">State assumptions</text>
+<rect x="170" y="120" width="140" height="110" rx="6" fill="#FFFFFF" stroke="#E0A100" stroke-width="1.5"/>
+<text x="180" y="146">Requests per sec</text>
+<text x="180" y="168">Storage size</text>
+<text x="180" y="190">Round numbers</text>
+<text x="180" y="212">Say "illustrative"</text>
+<rect x="325" y="120" width="140" height="110" rx="6" fill="#FFFFFF" stroke="#2F6FDE" stroke-width="1.5"/>
+<text x="335" y="146">Endpoints</text>
+<text x="335" y="168">Request / response</text>
+<text x="335" y="190">Tables and keys</text>
+<text x="335" y="212">Pick the database</text>
+<rect x="480" y="120" width="140" height="110" rx="6" fill="#FFFFFF" stroke="#2E9E44" stroke-width="1.5"/>
+<text x="490" y="146">Boxes and arrows</text>
+<text x="490" y="168">Walk one request</text>
+<text x="490" y="190">Cache, queue, DB</text>
+<text x="490" y="212">Go deeper on 1-2</text>
+<rect x="635" y="120" width="150" height="110" rx="6" fill="#FFFFFF" stroke="#D13B3B" stroke-width="1.5"/>
+<text x="645" y="146">Bottlenecks</text>
+<text x="645" y="168">Single points of fail</text>
+<text x="645" y="190">Scale and failure</text>
+<text x="645" y="212">Name each trade-off</text>
+<rect x="15" y="250" width="770" height="56" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+<text x="400" y="274" text-anchor="middle" font-size="14" font-weight="bold">Habits that score points</text>
+<text x="400" y="294" text-anchor="middle">Think out loud, ask before assuming, and tie every choice to a requirement.</text>
+</svg>

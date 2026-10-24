@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 410" width="800" height="410" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+<title>Notification system: API, queue, router, per-channel workers, providers, DLQ and status store</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker></defs>
+<rect width="800" height="410" fill="#FFFFFF"/>
+<text x="10" y="30" font-size="14" font-weight="bold">One topic per channel and priority, so OTPs never wait behind broadcasts.</text>
+<rect x="10" y="150" width="90" height="60" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="55" y="185" text-anchor="middle" font-size="14" font-weight="bold">Producers</text>
+<rect x="120" y="150" width="125" height="60" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="182" y="177" text-anchor="middle" font-size="14" font-weight="bold">Notification API</text>
+<text x="182" y="196" text-anchor="middle">idempotency key</text>
+<rect x="265" y="150" width="95" height="60" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<text x="312" y="177" text-anchor="middle" font-size="14" font-weight="bold">Queue</text>
+<text x="312" y="196" text-anchor="middle">ingress topic</text>
+<rect x="380" y="140" width="125" height="80" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="442" y="167" text-anchor="middle" font-size="14" font-weight="bold">Router</text>
+<text x="442" y="187" text-anchor="middle">preferences</text>
+<text x="442" y="206" text-anchor="middle">templates, caps</text>
+<rect x="535" y="70" width="120" height="58" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="595" y="96" text-anchor="middle" font-size="14" font-weight="bold">Push workers</text>
+<text x="595" y="115" text-anchor="middle">retry + breaker</text>
+<rect x="535" y="151" width="120" height="58" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="595" y="177" text-anchor="middle" font-size="14" font-weight="bold">SMS workers</text>
+<text x="595" y="196" text-anchor="middle">retry + breaker</text>
+<rect x="535" y="232" width="120" height="58" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="595" y="258" text-anchor="middle" font-size="14" font-weight="bold">Email workers</text>
+<text x="595" y="277" text-anchor="middle">retry + breaker</text>
+<rect x="685" y="70" width="105" height="58" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<text x="737" y="104" text-anchor="middle">FCM / APNs</text>
+<rect x="685" y="151" width="105" height="58" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<text x="737" y="185" text-anchor="middle">SMS provider</text>
+<rect x="685" y="232" width="105" height="58" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<text x="737" y="266" text-anchor="middle">Email provider</text>
+<rect x="535" y="340" width="120" height="56" rx="6" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+<text x="595" y="365" text-anchor="middle" font-size="14" font-weight="bold">DLQ</text>
+<text x="595" y="384" text-anchor="middle">replay after fix</text>
+<rect x="685" y="340" width="105" height="56" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+<text x="737" y="365" text-anchor="middle" font-size="14" font-weight="bold">Status store</text>
+<text x="737" y="384" text-anchor="middle">sent / failed</text>
+<line x1="100" y1="180" x2="118" y2="180" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="245" y1="180" x2="263" y2="180" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="360" y1="180" x2="378" y2="180" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="505" y1="160" x2="533" y2="105" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="505" y1="180" x2="533" y2="180" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="505" y1="200" x2="533" y2="255" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="655" y1="99" x2="683" y2="99" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="655" y1="180" x2="683" y2="180" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="655" y1="261" x2="683" y2="261" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="595" y1="290" x2="595" y2="338" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="587" y="320" text-anchor="end">max retries</text>
+<line x1="737" y1="290" x2="737" y2="338" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="729" y="320" text-anchor="end">webhooks</text>
+<text x="10" y="350">At-least-once delivery,</text>
+<text x="10" y="370">plus dedup keys, so</text>
+<text x="10" y="390">duplicate sends are rare.</text>
+</svg>

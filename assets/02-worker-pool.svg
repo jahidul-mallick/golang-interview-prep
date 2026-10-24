@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Worker pool: producer, jobs channel, N workers, results channel, consumer</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="380" fill="#FFFFFF"/>
+  <text x="400" y="26" text-anchor="middle" font-size="16" font-weight="bold">Worker pool: jobs fan out to N workers, results fan in</text>
+
+  <rect x="15" y="122" width="120" height="70" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="75" y="152" text-anchor="middle" font-weight="bold">Producer</text>
+  <text x="75" y="173" text-anchor="middle">sends jobs</text>
+
+  <line x1="135" y1="157" x2="162" y2="157" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="165" y="127" width="95" height="60" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="212" y="152" text-anchor="middle" font-weight="bold">jobs</text>
+  <text x="212" y="172" text-anchor="middle">channel</text>
+
+  <line x1="260" y1="150" x2="298" y2="95" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="260" y1="157" x2="298" y2="157" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="260" y1="165" x2="298" y2="220" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="300" y="60" width="120" height="55" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="360" y="93" text-anchor="middle" font-weight="bold">Worker 1</text>
+  <rect x="300" y="130" width="120" height="55" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="360" y="163" text-anchor="middle" font-weight="bold">Worker 2</text>
+  <rect x="300" y="200" width="120" height="55" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="360" y="233" text-anchor="middle" font-weight="bold">Worker 3</text>
+
+  <line x1="420" y1="88" x2="458" y2="150" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="420" y1="157" x2="458" y2="157" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="420" y1="227" x2="458" y2="165" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="460" y="127" width="95" height="60" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="507" y="152" text-anchor="middle" font-weight="bold">results</text>
+  <text x="507" y="172" text-anchor="middle">channel</text>
+
+  <line x1="555" y1="157" x2="602" y2="157" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="605" y="122" width="180" height="70" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="695" y="152" text-anchor="middle" font-weight="bold">Consumer</text>
+  <text x="695" y="173" text-anchor="middle">for r := range results</text>
+
+  <rect x="15" y="290" width="360" height="62" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="195" y="316" text-anchor="middle" font-weight="bold">Producer closes jobs</text>
+  <text x="195" y="337" text-anchor="middle">workers see range end and exit</text>
+
+  <rect x="425" y="290" width="360" height="62" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="605" y="316" text-anchor="middle" font-weight="bold">go func() { wg.Wait(); close(results) }()</text>
+  <text x="605" y="337" text-anchor="middle">close results only after all workers exit</text>
+</svg>

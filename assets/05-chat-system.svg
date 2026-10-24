@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+  <title>Chat system: WebSocket to chat server, save first, pub/sub to the recipient's server, push if offline</title>
+  <rect x="0" y="0" width="800" height="420" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="30" font-size="16" font-weight="bold">Chat system: sending one message across servers</text>
+
+  <!-- Row 1 -->
+  <rect x="30" y="80" width="110" height="76" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="85" y="112" text-anchor="middle" font-weight="bold">Client A</text>
+  <text x="85" y="134" text-anchor="middle">sender</text>
+
+  <rect x="188" y="80" width="110" height="76" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="243" y="106" text-anchor="middle" font-weight="bold">Chat server A</text>
+  <text x="243" y="128" text-anchor="middle">WebSocket</text>
+  <text x="243" y="146" text-anchor="middle">connection</text>
+
+  <rect x="346" y="80" width="110" height="76" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="401" y="106" text-anchor="middle" font-weight="bold">Pub/sub</text>
+  <text x="401" y="128" text-anchor="middle">channel per</text>
+  <text x="401" y="146" text-anchor="middle">room or user</text>
+
+  <rect x="504" y="80" width="110" height="76" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="559" y="106" text-anchor="middle" font-weight="bold">Chat server B</text>
+  <text x="559" y="128" text-anchor="middle">holds the</text>
+  <text x="559" y="146" text-anchor="middle">recipient socket</text>
+
+  <rect x="662" y="80" width="110" height="76" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="717" y="112" text-anchor="middle" font-weight="bold">Client B</text>
+  <text x="717" y="134" text-anchor="middle">recipient</text>
+
+  <!-- Row 2 -->
+  <rect x="188" y="215" width="110" height="76" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="243" y="241" text-anchor="middle" font-weight="bold">Message store</text>
+  <text x="243" y="263" text-anchor="middle">partitioned by</text>
+  <text x="243" y="281" text-anchor="middle">conversation</text>
+
+  <rect x="504" y="215" width="110" height="76" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="559" y="241" text-anchor="middle" font-weight="bold">Push service</text>
+  <text x="559" y="263" text-anchor="middle">if recipient</text>
+  <text x="559" y="281" text-anchor="middle">is offline</text>
+
+  <!-- Arrows -->
+  <g stroke="#555555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="140" y1="118" x2="186" y2="118"/>
+    <line x1="298" y1="118" x2="344" y2="118"/>
+    <line x1="456" y1="118" x2="502" y2="118"/>
+    <line x1="614" y1="118" x2="660" y2="118"/>
+    <line x1="243" y1="156" x2="243" y2="213"/>
+  </g>
+  <line x1="559" y1="156" x2="559" y2="213" stroke="#555555" stroke-width="2" stroke-dasharray="6 4" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Step numbers -->
+  <g fill="#2F6FDE">
+    <circle cx="163" cy="98" r="10"/>
+    <circle cx="321" cy="98" r="10"/>
+    <circle cx="479" cy="98" r="10"/>
+    <circle cx="637" cy="98" r="10"/>
+    <circle cx="262" cy="185" r="10"/>
+  </g>
+  <g fill="#FFFFFF" font-weight="bold" text-anchor="middle">
+    <text x="163" y="103">1</text>
+    <text x="321" y="103">3</text>
+    <text x="479" y="103">4</text>
+    <text x="637" y="103">5</text>
+    <text x="262" y="190">2</text>
+  </g>
+
+  <!-- Legend -->
+  <text x="30" y="332"><tspan font-weight="bold">1</tspan> Client sends over its WebSocket.   <tspan font-weight="bold">2</tspan> Server saves the message first, then acks.</text>
+  <text x="30" y="354"><tspan font-weight="bold">3</tspan> Server publishes to pub/sub.   <tspan font-weight="bold">4</tspan> The server holding the recipient's socket receives it.</text>
+  <text x="30" y="376"><tspan font-weight="bold">5</tspan> It forwards to the socket; the client acks. Dashed: no socket, so send a push notification.</text>
+</svg>

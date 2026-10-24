@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 610" width="800" height="610" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+  <title>Saga: order checkout across services (orchestration) with compensating actions on failure</title>
+  <rect x="0" y="0" width="800" height="610" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+    <marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2E9E44"/>
+    </marker>
+    <marker id="arrowR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D13B3B"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="30" font-size="16" font-weight="bold">Saga: order checkout across services (orchestration)</text>
+
+  <!-- Orchestrator -->
+  <rect x="250" y="50" width="300" height="60" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="400" y="76" text-anchor="middle" font-weight="bold">Orchestrator (saga coordinator)</text>
+  <text x="400" y="97" text-anchor="middle">tells each service what to do next</text>
+
+  <!-- Orchestrator to services -->
+  <g stroke="#555555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="330" y1="110" x2="100" y2="156"/>
+    <line x1="370" y1="110" x2="300" y2="156"/>
+    <line x1="430" y1="110" x2="500" y2="156"/>
+    <line x1="470" y1="110" x2="700" y2="156"/>
+  </g>
+
+  <!-- Forward arrows (success) -->
+  <g stroke="#2E9E44" stroke-width="3" fill="none" marker-end="url(#arrowG)">
+    <line x1="167" y1="250" x2="233" y2="250"/>
+    <line x1="367" y1="250" x2="433" y2="250"/>
+    <line x1="567" y1="250" x2="633" y2="250"/>
+  </g>
+  <g fill="#1B1F24" text-anchor="middle">
+    <text x="200" y="222">success</text><text x="200" y="238">next step</text>
+    <text x="400" y="222">success</text><text x="400" y="238">next step</text>
+    <text x="600" y="222">success</text><text x="600" y="238">next step</text>
+  </g>
+
+  <!-- Service 1 -->
+  <rect x="35" y="170" width="130" height="165" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="100" cy="170" r="12" fill="#2F6FDE"/>
+  <text x="100" y="175" text-anchor="middle" font-weight="bold" fill="#FFFFFF">1</text>
+  <text x="100" y="202" text-anchor="middle" font-weight="bold">Order service</text>
+  <text x="100" y="224" text-anchor="middle">create order</text>
+  <text x="100" y="241" text-anchor="middle">(PENDING)</text>
+  <path d="M82,262 v20 a18,6 0 0 0 36,0 v-20" fill="#FFFFFF" stroke="#555555" stroke-width="1.5"/>
+  <ellipse cx="100" cy="262" rx="18" ry="6" fill="#FFFFFF" stroke="#555555" stroke-width="1.5"/>
+  <text x="100" y="307" text-anchor="middle">own DB,</text>
+  <text x="100" y="324" text-anchor="middle">local transaction</text>
+
+  <!-- Service 2 -->
+  <rect x="235" y="170" width="130" height="165" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="300" cy="170" r="12" fill="#2F6FDE"/>
+  <text x="300" y="175" text-anchor="middle" font-weight="bold" fill="#FFFFFF">2</text>
+  <text x="300" y="202" text-anchor="middle" font-weight="bold">Payment service</text>
+  <text x="300" y="224" text-anchor="middle">charge card</text>
+  <path d="M282,262 v20 a18,6 0 0 0 36,0 v-20" fill="#FFFFFF" stroke="#555555" stroke-width="1.5"/>
+  <ellipse cx="300" cy="262" rx="18" ry="6" fill="#FFFFFF" stroke="#555555" stroke-width="1.5"/>
+  <text x="300" y="307" text-anchor="middle">own DB,</text>
+  <text x="300" y="324" text-anchor="middle">local transaction</text>
+
+  <!-- Service 3 -->
+  <rect x="435" y="170" width="130" height="165" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <circle cx="500" cy="170" r="12" fill="#2F6FDE"/>
+  <text x="500" y="175" text-anchor="middle" font-weight="bold" fill="#FFFFFF">3</text>
+  <text x="500" y="202" text-anchor="middle" font-weight="bold">Inventory service</text>
+  <text x="500" y="224" text-anchor="middle">reserve stock</text>
+  <path d="M482,262 v20 a18,6 0 0 0 36,0 v-20" fill="#FFFFFF" stroke="#555555" stroke-width="1.5"/>
+  <ellipse cx="500" cy="262" rx="18" ry="6" fill="#FFFFFF" stroke="#555555" stroke-width="1.5"/>
+  <text x="500" y="307" text-anchor="middle">own DB,</text>
+  <text x="500" y="324" text-anchor="middle">local transaction</text>
+
+  <!-- Service 4 (fails) -->
+  <rect x="635" y="170" width="130" height="165" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <circle cx="700" cy="170" r="12" fill="#D13B3B"/>
+  <text x="700" y="175" text-anchor="middle" font-weight="bold" fill="#FFFFFF">4</text>
+  <text x="700" y="202" text-anchor="middle" font-weight="bold">Shipping service</text>
+  <text x="700" y="224" text-anchor="middle">create shipment</text>
+  <text x="700" y="241" text-anchor="middle" font-weight="bold" fill="#A82525">Shipping fails</text>
+  <path d="M682,262 v20 a18,6 0 0 0 36,0 v-20" fill="#FFFFFF" stroke="#555555" stroke-width="1.5"/>
+  <ellipse cx="700" cy="262" rx="18" ry="6" fill="#FFFFFF" stroke="#555555" stroke-width="1.5"/>
+  <text x="700" y="307" text-anchor="middle">own DB,</text>
+  <text x="700" y="324" text-anchor="middle">local transaction</text>
+
+  <!-- Backward compensations (red) -->
+  <g stroke="#D13B3B" stroke-width="2.5" fill="none" marker-end="url(#arrowR)">
+    <path d="M675,336 V375 H525 V338"/>
+    <path d="M475,336 V375 H325 V338"/>
+    <path d="M275,336 V375 H125 V338"/>
+  </g>
+  <g fill="#1B1F24" text-anchor="middle">
+    <text x="600" y="397">release stock</text>
+    <text x="400" y="397">refund payment</text>
+    <text x="200" y="397">cancel order (CANCELLED)</text>
+  </g>
+  <text x="400" y="430" text-anchor="middle" font-weight="bold" fill="#A82525">Failure: compensating actions run in reverse order</text>
+
+  <!-- Notes -->
+  <rect x="30" y="452" width="740" height="40" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="44" y="477">No distributed transaction: each step is a local commit, undone by a compensating action</text>
+  <rect x="30" y="502" width="740" height="40" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="44" y="527">Compensations must be idempotent and retried until they succeed</text>
+  <rect x="30" y="552" width="740" height="40" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="44" y="577">Choreography variant: no orchestrator, services react to each other's events</text>
+</svg>

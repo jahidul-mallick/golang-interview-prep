@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 330" width="800" height="330" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Struct field order and padding: bool, int64, bool takes 24 bytes; int64, bool, bool takes 16 bytes</title>
+  <rect x="0" y="0" width="800" height="330" fill="#FFFFFF"/>
+
+  <text x="40" y="34" font-size="16" font-weight="bold">{ bool, int64, bool }  =  24 bytes</text>
+  <text x="440" y="34" font-size="16" font-weight="bold">{ int64, bool, bool }  =  16 bytes</text>
+  <text x="40" y="58" font-size="13">each row is 8 bytes, each cell is 1 byte wide</text>
+
+  <!-- left -->
+  <rect x="40" y="80" width="40" height="50" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="60" y="110" text-anchor="middle" font-size="13">bool</text>
+  <rect x="80" y="80" width="280" height="50" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="220" y="110" text-anchor="middle">padding (7 bytes)</text>
+
+  <rect x="40" y="134" width="320" height="50" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="200" y="164" text-anchor="middle">int64 (8 bytes)</text>
+
+  <rect x="40" y="188" width="40" height="50" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="60" y="218" text-anchor="middle" font-size="13">bool</text>
+  <rect x="80" y="188" width="280" height="50" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="220" y="218" text-anchor="middle">padding (7 bytes)</text>
+
+  <!-- right -->
+  <rect x="440" y="80" width="320" height="50" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="600" y="110" text-anchor="middle">int64 (8 bytes)</text>
+
+  <rect x="440" y="134" width="40" height="50" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="460" y="164" text-anchor="middle" font-size="13">bool</text>
+  <rect x="480" y="134" width="40" height="50" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="500" y="164" text-anchor="middle" font-size="13">bool</text>
+  <rect x="520" y="134" width="240" height="50" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="640" y="164" text-anchor="middle">padding (6 bytes)</text>
+
+  <text x="40" y="282" font-size="14">An int64 must start at a multiple of 8, and the struct size is rounded up to a multiple of 8.</text>
+  <text x="40" y="306" font-size="14">Largest fields first usually gives the least padding. Check with unsafe.Sizeof.</text>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 330" width="800" height="330" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Token bucket: refill at a fixed rate, each request takes one token</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="330" fill="#FFFFFF"/>
+  <text x="400" y="26" text-anchor="middle" font-size="16" font-weight="bold">Token bucket: allows bursts, enforces an average rate</text>
+
+  <rect x="15" y="70" width="200" height="70" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="115" y="100" text-anchor="middle" font-weight="bold">Refill</text>
+  <text x="115" y="121" text-anchor="middle">rate tokens per second</text>
+
+  <line x1="215" y1="105" x2="272" y2="130" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="275" y="60" width="250" height="150" rx="10" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="400" y="86" text-anchor="middle" font-weight="bold">Bucket (capacity = burst)</text>
+  <circle cx="320" cy="140" r="20" fill="#FFFFFF" stroke="#E0A100" stroke-width="2"/>
+  <circle cx="370" cy="140" r="20" fill="#FFFFFF" stroke="#E0A100" stroke-width="2"/>
+  <circle cx="420" cy="140" r="20" fill="#FFFFFF" stroke="#E0A100" stroke-width="2"/>
+  <circle cx="470" cy="140" r="20" fill="none" stroke="#E0A100" stroke-width="2" stroke-dasharray="4 4"/>
+  <text x="400" y="192" text-anchor="middle">tokens left: 3 of 4</text>
+
+  <rect x="15" y="215" width="200" height="60" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="115" y="242" text-anchor="middle" font-weight="bold">Request</text>
+  <text x="115" y="262" text-anchor="middle">Allow() takes 1 token</text>
+
+  <line x1="215" y1="240" x2="272" y2="190" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <line x1="525" y1="110" x2="600" y2="90" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="525" y1="165" x2="600" y2="215" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="603" y="60" width="182" height="60" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="694" y="86" text-anchor="middle" font-weight="bold">Token available</text>
+  <text x="694" y="106" text-anchor="middle">allow the request</text>
+
+  <rect x="603" y="190" width="182" height="60" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="694" y="216" text-anchor="middle" font-weight="bold">Bucket empty</text>
+  <text x="694" y="236" text-anchor="middle">reject (HTTP 429)</text>
+
+  <text x="400" y="305" text-anchor="middle">Lazy refill: tokens += elapsed x rate on each call, capped at capacity</text>
+</svg>

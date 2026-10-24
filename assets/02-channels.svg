@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" width="800" height="440" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>Channel flow and lifecycle: send, buffer, receive, close</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="440" fill="#FFFFFF"/>
+
+  <text x="400" y="26" text-anchor="middle" font-size="16" font-weight="bold">Data flow</text>
+  <rect x="20" y="45" width="200" height="90" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="120" y="72" text-anchor="middle" font-weight="bold">Producer goroutine</text>
+  <text x="120" y="94" text-anchor="middle">ch &lt;- v</text>
+  <text x="120" y="116" text-anchor="middle">owns and closes ch</text>
+
+  <line x1="220" y1="90" x2="290" y2="90" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="295" y="60" width="64" height="60" rx="4" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <rect x="368" y="60" width="64" height="60" rx="4" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <rect x="441" y="60" width="64" height="60" rx="4" fill="#FFFFFF" stroke="#E0A100" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="327" y="96" text-anchor="middle">v1</text>
+  <text x="400" y="96" text-anchor="middle">v2</text>
+  <text x="473" y="96" text-anchor="middle">empty</text>
+  <text x="400" y="145" text-anchor="middle">buffer, cap 3 (FIFO)</text>
+
+  <line x1="510" y1="90" x2="580" y2="90" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="585" y="45" width="195" height="90" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="682" y="72" text-anchor="middle" font-weight="bold">Consumer goroutine</text>
+  <text x="682" y="94" text-anchor="middle">v, ok := &lt;-ch</text>
+  <text x="682" y="116" text-anchor="middle">for v := range ch</text>
+
+  <text x="400" y="180" text-anchor="middle">Send blocks when full. Receive blocks when empty.</text>
+  <text x="400" y="200" text-anchor="middle">Unbuffered (cap 0): send waits until a receiver is ready.</text>
+
+  <text x="400" y="240" text-anchor="middle" font-size="16" font-weight="bold">Lifecycle</text>
+  <rect x="20" y="258" width="210" height="90" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="125" y="284" text-anchor="middle" font-weight="bold">Open</text>
+  <text x="125" y="306" text-anchor="middle">send and receive work</text>
+  <text x="125" y="326" text-anchor="middle">normally</text>
+
+  <line x1="230" y1="303" x2="290" y2="303" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="260" y="294" text-anchor="middle" font-size="13">close</text>
+
+  <rect x="295" y="258" width="210" height="90" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="400" y="284" text-anchor="middle" font-weight="bold">Closed, not empty</text>
+  <text x="400" y="306" text-anchor="middle">receive still gets buffered</text>
+  <text x="400" y="326" text-anchor="middle">values, ok = true</text>
+
+  <line x1="505" y1="303" x2="565" y2="303" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="535" y="294" text-anchor="middle" font-size="13">drained</text>
+
+  <rect x="570" y="258" width="210" height="90" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="675" y="284" text-anchor="middle" font-weight="bold">Closed and empty</text>
+  <text x="675" y="306" text-anchor="middle">receive returns zero value</text>
+  <text x="675" y="326" text-anchor="middle">and ok = false, forever</text>
+
+  <rect x="20" y="372" width="760" height="52" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="400" y="394" text-anchor="middle">Panics: send on closed channel, close of closed channel, close of nil channel.</text>
+  <text x="400" y="414" text-anchor="middle">Blocks forever: send or receive on a nil channel.</text>
+</svg>

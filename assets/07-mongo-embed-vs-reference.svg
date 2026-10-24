@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" width="800" height="300" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>MongoDB schema design: embed line items in the order document, or reference the customer by id</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="800" height="300" fill="#FFFFFF"/>
+
+  <text x="200" y="30" font-size="16" font-weight="bold" text-anchor="middle">Embed</text>
+  <text x="600" y="30" font-size="16" font-weight="bold" text-anchor="middle">Reference</text>
+  <line x1="400" y1="15" x2="400" y2="285" stroke="#BBBBBB" stroke-width="1"/>
+
+  <rect x="30" y="50" width="340" height="150" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="200" y="76" text-anchor="middle" font-weight="bold">orders document</text>
+  <rect x="50" y="95" width="145" height="85" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="122" y="130" text-anchor="middle">item</text>
+  <text x="122" y="150" font-size="13" text-anchor="middle">sku A, qty 2</text>
+  <rect x="205" y="95" width="145" height="85" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="277" y="130" text-anchor="middle">item</text>
+  <text x="277" y="150" font-size="13" text-anchor="middle">sku B, qty 1</text>
+  <text x="200" y="228" font-size="13" text-anchor="middle">One read returns everything.</text>
+  <text x="200" y="248" font-size="13" text-anchor="middle">Items are few, bounded, read together.</text>
+
+  <rect x="420" y="70" width="170" height="90" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="505" y="100" text-anchor="middle" font-weight="bold">orders document</text>
+  <text x="505" y="124" font-size="13" text-anchor="middle">total, status</text>
+  <text x="505" y="144" font-size="13" text-anchor="middle">customer_id: 42</text>
+
+  <rect x="640" y="70" width="140" height="90" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="710" y="100" text-anchor="middle" font-weight="bold">customers</text>
+  <text x="710" y="124" font-size="13" text-anchor="middle">_id: 42</text>
+  <text x="710" y="144" font-size="13" text-anchor="middle">name, address</text>
+
+  <line x1="592" y1="115" x2="638" y2="115" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+  <text x="600" y="228" font-size="13" text-anchor="middle">Two reads, or $lookup. Use when the other side is</text>
+  <text x="600" y="248" font-size="13" text-anchor="middle">shared, large, unbounded or changes on its own.</text>
+</svg>

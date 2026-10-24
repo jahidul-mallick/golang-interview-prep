@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 660" width="800" height="660" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+  <title>Transactional outbox: no lost events</title>
+  <rect x="0" y="0" width="800" height="660" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="40" font-size="18" font-weight="bold">Transactional outbox: no lost events</text>
+
+  <!-- Left: problem -->
+  <rect x="30" y="76" width="250" height="434" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="44" y="102" font-size="15" font-weight="bold">Problem: dual write</text>
+
+  <rect x="50" y="118" width="210" height="34" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="155" y="140" text-anchor="middle" font-weight="bold">Service</text>
+  <rect x="50" y="176" width="210" height="38" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="155" y="200" text-anchor="middle">Step A: write to database</text>
+  <rect x="50" y="264" width="210" height="38" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="155" y="288" text-anchor="middle">Step B: publish to broker</text>
+
+  <g stroke="#555555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="155" y1="152" x2="155" y2="174"/>
+    <line x1="155" y1="214" x2="155" y2="262"/>
+  </g>
+  <circle cx="155" cy="238" r="11" fill="#D13B3B"/>
+  <text x="155" y="243" text-anchor="middle" font-weight="bold" fill="#FFFFFF">X</text>
+  <text x="176" y="243" font-weight="bold">crash</text>
+
+  <text x="44" y="340" font-weight="bold">Crash after step A</text>
+  <text x="44" y="359">Row saved, event never sent.</text>
+  <text x="44" y="392" font-weight="bold">Order swapped (B, then A)</text>
+  <text x="44" y="411">Event sent, DB write may fail.</text>
+  <text x="44" y="444" font-weight="bold">Why it happens</text>
+  <text x="44" y="463">No single transaction covers</text>
+  <text x="44" y="482">both the database and broker.</text>
+
+  <!-- Right: solution -->
+  <text x="300" y="102" font-size="15" font-weight="bold">Fix: save the event in the same transaction</text>
+
+  <g stroke="#555555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="535" y1="170" x2="535" y2="182"/>
+    <line x1="535" y1="238" x2="535" y2="250"/>
+    <line x1="535" y1="306" x2="535" y2="318"/>
+    <line x1="535" y1="374" x2="535" y2="386"/>
+    <line x1="535" y1="442" x2="535" y2="454"/>
+  </g>
+
+  <rect x="300" y="116" width="470" height="54" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <circle cx="325" cy="136" r="12" fill="#2E9E44"/>
+  <text x="325" y="141" text-anchor="middle" font-weight="bold" fill="#FFFFFF">1</text>
+  <text x="348" y="141" font-weight="bold">Service starts ONE database transaction</text>
+  <text x="348" y="160">BEGIN: one transaction covers both writes below</text>
+
+  <rect x="300" y="184" width="470" height="54" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <circle cx="325" cy="204" r="12" fill="#2E9E44"/>
+  <text x="325" y="209" text-anchor="middle" font-weight="bold" fill="#FFFFFF">2</text>
+  <text x="348" y="209" font-weight="bold">Same transaction: business row + outbox row</text>
+  <text x="348" y="228">orders row, plus outbox row (event payload, status NEW)</text>
+
+  <rect x="300" y="252" width="470" height="54" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <circle cx="325" cy="272" r="12" fill="#2E9E44"/>
+  <text x="325" y="277" text-anchor="middle" font-weight="bold" fill="#FFFFFF">3</text>
+  <text x="348" y="277" font-weight="bold">Commit: both rows are saved, or neither</text>
+  <text x="348" y="296">No crash can save the data without its event</text>
+
+  <rect x="300" y="320" width="470" height="54" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <circle cx="325" cy="340" r="12" fill="#2E9E44"/>
+  <text x="325" y="345" text-anchor="middle" font-weight="bold" fill="#FFFFFF">4</text>
+  <text x="348" y="345" font-weight="bold">Relay reads NEW outbox rows</text>
+  <text x="348" y="364">A poller query for status NEW, or CDC reading the DB log</text>
+
+  <rect x="300" y="388" width="470" height="54" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <circle cx="325" cy="408" r="12" fill="#2E9E44"/>
+  <text x="325" y="413" text-anchor="middle" font-weight="bold" fill="#FFFFFF">5</text>
+  <text x="348" y="413" font-weight="bold">Relay publishes to the broker, then marks SENT</text>
+  <text x="348" y="432">Message broker (Kafka topic) first; only then status = SENT</text>
+
+  <rect x="300" y="456" width="470" height="54" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <circle cx="325" cy="476" r="12" fill="#2E9E44"/>
+  <text x="325" y="481" text-anchor="middle" font-weight="bold" fill="#FFFFFF">6</text>
+  <text x="348" y="481" font-weight="bold">Consumers receive the event</text>
+  <text x="348" y="500">Each consumer group reads the topic and handles the event</text>
+
+  <!-- Bold note -->
+  <rect x="30" y="526" width="740" height="58" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="44" y="550" font-size="14" font-weight="bold">Relay can publish twice (crash after publish, before mark SENT), so</text>
+  <text x="44" y="571" font-size="14" font-weight="bold">delivery is at-least-once: consumers must be idempotent (dedupe by event id)</text>
+
+  <!-- Side note -->
+  <rect x="30" y="600" width="740" height="40" rx="8" fill="#FFFFFF" stroke="#555555" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="44" y="625"><tspan font-weight="bold">Outbox table:</tspan> id, aggregate id, type, payload, status, created_at; delete or archive old rows</text>
+</svg>

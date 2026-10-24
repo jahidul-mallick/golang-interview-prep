@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" width="800" height="340" font-family="Arial, Helvetica, sans-serif">
+  <title>Kubernetes basics: Ingress to Service to Deployment pods with probes</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="800" height="340" fill="#FFFFFF"/>
+
+  <rect x="15" y="110" width="110" height="60" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="70" y="145" font-size="14" text-anchor="middle" fill="#1B1F24">Client</text>
+
+  <rect x="170" y="110" width="110" height="60" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="225" y="145" font-size="14" text-anchor="middle" fill="#1B1F24">Ingress</text>
+
+  <rect x="325" y="110" width="120" height="60" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="385" y="135" font-size="14" text-anchor="middle" fill="#1B1F24">Service</text>
+  <text x="385" y="154" font-size="13" text-anchor="middle" fill="#1B1F24">stable name + IP</text>
+
+  <rect x="490" y="50" width="295" height="240" rx="10" fill="#F6F8FA" stroke="#555" stroke-width="2"/>
+  <text x="637" y="75" font-size="14" font-weight="bold" text-anchor="middle" fill="#1B1F24">Deployment (replicas: 3)</text>
+
+  <rect x="510" y="95" width="120" height="50" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="570" y="125" font-size="14" text-anchor="middle" fill="#1B1F24">Pod A: ready</text>
+  <rect x="650" y="95" width="120" height="50" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="710" y="125" font-size="14" text-anchor="middle" fill="#1B1F24">Pod B: ready</text>
+  <rect x="510" y="160" width="260" height="50" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="640" y="182" font-size="14" text-anchor="middle" fill="#1B1F24">Pod C: readiness fails</text>
+  <text x="640" y="200" font-size="13" text-anchor="middle" fill="#1B1F24">removed from Service, no traffic</text>
+
+  <text x="637" y="235" font-size="13" text-anchor="middle" fill="#1B1F24">liveness fails: container restarted</text>
+  <text x="637" y="257" font-size="13" text-anchor="middle" fill="#1B1F24">config: env vars from ConfigMap / Secret</text>
+  <text x="637" y="279" font-size="13" text-anchor="middle" fill="#1B1F24">SIGTERM, then grace period, then SIGKILL</text>
+
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#a)">
+    <line x1="125" y1="140" x2="168" y2="140"/>
+    <line x1="280" y1="140" x2="323" y2="140"/>
+    <line x1="445" y1="130" x2="508" y2="120"/>
+  </g>
+  <text x="400" y="320" font-size="14" text-anchor="middle" fill="#1B1F24">Service sends traffic only to pods that are Ready (matched by labels)</text>
+</svg>

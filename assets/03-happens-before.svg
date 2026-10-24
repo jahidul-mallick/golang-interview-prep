@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>A channel send happens-before the matching receive completes, so the write before the send is visible after the receive</title>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="400" fill="#FFFFFF"/>
+
+  <text x="190" y="36" text-anchor="middle" font-size="16" font-weight="bold">Goroutine A</text>
+  <text x="610" y="36" text-anchor="middle" font-size="16" font-weight="bold">Goroutine B</text>
+
+  <!-- time arrow -->
+  <line x1="30" y1="60" x2="30" y2="335" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="30" y="354" text-anchor="middle" font-size="13">time</text>
+
+  <!-- A -->
+  <rect x="60" y="60" width="260" height="60" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="190" y="96" text-anchor="middle">x = 42   (plain write)</text>
+  <rect x="60" y="170" width="260" height="60" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="190" y="206" text-anchor="middle">ch &lt;- true   (send)</text>
+
+  <!-- B -->
+  <rect x="480" y="170" width="260" height="60" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="610" y="206" text-anchor="middle">&lt;-ch   (receive returns)</text>
+  <rect x="480" y="280" width="260" height="60" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="610" y="316" text-anchor="middle">print(x)   always 42</text>
+
+  <!-- arrows -->
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#arr)">
+    <line x1="190" y1="120" x2="190" y2="168"/>
+    <line x1="320" y1="200" x2="478" y2="200"/>
+    <line x1="610" y1="230" x2="610" y2="278"/>
+  </g>
+  <text x="400" y="188" text-anchor="middle" font-size="13" font-weight="bold">happens-before</text>
+
+  <text x="60" y="384" font-size="14">Without a channel, mutex or atomic between them, B may print 0: that is a data race.</text>
+</svg>

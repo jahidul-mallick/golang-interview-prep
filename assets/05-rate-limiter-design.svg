@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 370" width="800" height="370" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+<title>Rate limiter design: gateway middleware checks a Redis token bucket and returns 429 when over the limit</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker></defs>
+<rect width="800" height="370" fill="#FFFFFF"/>
+<rect x="20" y="150" width="110" height="60" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="75" y="185" text-anchor="middle" font-size="14" font-weight="bold">Client</text>
+<rect x="220" y="130" width="200" height="100" rx="6" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+<text x="320" y="170" text-anchor="middle" font-size="14" font-weight="bold">API gateway</text>
+<text x="320" y="192" text-anchor="middle">rate-limit middleware</text>
+<text x="320" y="212" text-anchor="middle">key = user / API key / IP</text>
+<rect x="220" y="20" width="200" height="60" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<text x="320" y="48" text-anchor="middle" font-size="14" font-weight="bold">Rules store</text>
+<text x="320" y="67" text-anchor="middle">limit, window, burst</text>
+<rect x="220" y="290" width="200" height="60" rx="6" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+<text x="320" y="318" text-anchor="middle" font-size="14" font-weight="bold">Redis + Lua script</text>
+<text x="320" y="337" text-anchor="middle">atomic token bucket, TTL</text>
+<rect x="560" y="105" width="220" height="60" rx="6" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+<text x="670" y="132" text-anchor="middle" font-size="14" font-weight="bold">Backend service</text>
+<text x="670" y="151" text-anchor="middle">request forwarded</text>
+<rect x="560" y="195" width="220" height="60" rx="6" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+<text x="670" y="222" text-anchor="middle" font-size="14" font-weight="bold">429 Too Many Requests</text>
+<text x="670" y="241" text-anchor="middle">Retry-After, X-RateLimit-*</text>
+<line x1="130" y1="180" x2="218" y2="180" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="320" y1="80" x2="320" y2="128" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="330" y="108">hot reload</text>
+<line x1="290" y1="230" x2="290" y2="288" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="350" y1="288" x2="350" y2="232" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="195" y="262">1. check key</text>
+<text x="362" y="262">2. allow / deny</text>
+<line x1="420" y1="150" x2="558" y2="135" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="455" y="130">allowed</text>
+<line x1="420" y1="210" x2="558" y2="225" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="450" y="238">over limit</text>
+<text x="500" y="310">If Redis times out: fail open for public</text>
+<text x="500" y="330">traffic, fail closed for payments.</text>
+</svg>

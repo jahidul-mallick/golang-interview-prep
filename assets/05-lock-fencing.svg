@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 730" width="800" height="730" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1B1F24">
+  <title>Distributed lock: why a lease alone is not safe, and the fencing token fix</title>
+  <rect x="0" y="0" width="800" height="730" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+    <marker id="arrowred" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D13B3B"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="30" font-size="16" font-weight="bold">Distributed lock: why a lease alone is not safe, and the fencing token fix</text>
+
+  <!-- Lifelines -->
+  <g stroke="#999999" stroke-width="1.5" stroke-dasharray="5 4" fill="none">
+    <line x1="85" y1="96" x2="85" y2="560"/>
+    <line x1="460" y1="96" x2="460" y2="560"/>
+    <line x1="690" y1="96" x2="690" y2="560"/>
+    <line x1="240" y1="278" x2="240" y2="560"/>
+  </g>
+
+  <!-- Header boxes -->
+  <rect x="15" y="48" width="140" height="48" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="85" y="77" text-anchor="middle" font-weight="bold">Client A</text>
+  <rect x="355" y="48" width="210" height="48" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="460" y="68" text-anchor="middle" font-weight="bold">Lock service</text>
+  <text x="460" y="86" text-anchor="middle">(etcd / ZooKeeper)</text>
+  <rect x="595" y="48" width="190" height="48" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="690" y="68" text-anchor="middle" font-weight="bold">Storage</text>
+  <text x="690" y="86" text-anchor="middle">(the protected resource)</text>
+
+  <!-- Step 1 -->
+  <g stroke="#555555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="85" y1="128" x2="458" y2="128"/>
+    <line x1="460" y1="156" x2="87" y2="156" stroke-dasharray="6 4"/>
+  </g>
+  <circle cx="120" cy="115" r="11" fill="#2F6FDE"/>
+  <text x="120" y="120" text-anchor="middle" font-weight="bold" fill="#FFFFFF">1</text>
+  <text x="137" y="120">Acquire lock with a lease (TTL 30 s)</text>
+  <text x="110" y="148">Granted: fencing token 33</text>
+
+  <!-- Step 2 -->
+  <rect x="15" y="175" width="205" height="66" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <circle cx="35" cy="192" r="11" fill="#E0A100"/>
+  <text x="35" y="197" text-anchor="middle" font-weight="bold">2</text>
+  <text x="53" y="197" font-weight="bold">Client A pauses</text>
+  <text x="27" y="215">Long GC pause or network</text>
+  <text x="27" y="233">stall. Lease (30 s) expires.</text>
+  <rect x="355" y="180" width="210" height="44" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="460" y="199" text-anchor="middle">Lease expires,</text>
+  <text x="460" y="216" text-anchor="middle">lock is free again</text>
+
+  <!-- Step 3 -->
+  <rect x="195" y="252" width="90" height="26" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="240" y="270" text-anchor="middle" font-weight="bold">Client B</text>
+  <g stroke="#555555" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="240" y1="312" x2="458" y2="312"/>
+    <line x1="460" y1="340" x2="242" y2="340" stroke-dasharray="6 4"/>
+  </g>
+  <circle cx="261" cy="299" r="11" fill="#2F6FDE"/>
+  <text x="261" y="304" text-anchor="middle" font-weight="bold" fill="#FFFFFF">3</text>
+  <text x="278" y="304">Acquire lock</text>
+  <text x="256" y="332">Granted: token 34</text>
+
+  <!-- Step 4 -->
+  <line x1="240" y1="372" x2="688" y2="372" stroke="#555555" stroke-width="2" marker-end="url(#arrow)"/>
+  <circle cx="483" cy="359" r="11" fill="#2F6FDE"/>
+  <text x="483" y="364" text-anchor="middle" font-weight="bold" fill="#FFFFFF">4</text>
+  <text x="500" y="364">Write with token 34</text>
+  <rect x="595" y="385" width="190" height="52" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="690" y="405" text-anchor="middle" font-weight="bold">Accepted</text>
+  <text x="690" y="423" text-anchor="middle">highest token seen = 34</text>
+
+  <!-- Step 5 -->
+  <rect x="15" y="400" width="205" height="62" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <circle cx="35" cy="418" r="11" fill="#D13B3B"/>
+  <text x="35" y="423" text-anchor="middle" font-weight="bold" fill="#FFFFFF">5</text>
+  <text x="53" y="423" font-weight="bold">Client A wakes up</text>
+  <text x="27" y="441">still believes it holds</text>
+  <text x="27" y="456">the lock</text>
+  <line x1="85" y1="490" x2="688" y2="490" stroke="#D13B3B" stroke-width="2.5" marker-end="url(#arrowred)"/>
+  <text x="480" y="482" fill="#D13B3B" font-weight="bold">Write with token 33</text>
+  <rect x="595" y="500" width="190" height="52" rx="8" fill="#FDE7E7" stroke="#D13B3B" stroke-width="2"/>
+  <text x="690" y="520" text-anchor="middle" font-weight="bold" fill="#D13B3B">REJECTED</text>
+  <text x="690" y="538" text-anchor="middle">33 &lt; 34 (highest seen)</text>
+
+  <!-- Rule -->
+  <rect x="15" y="578" width="770" height="40" rx="8" fill="#E3F6E5" stroke="#2E9E44" stroke-width="2"/>
+  <text x="400" y="603" text-anchor="middle" font-weight="bold">Rule: the storage checks the token, not the client's belief that it holds the lock</text>
+
+  <!-- Notes -->
+  <rect x="15" y="634" width="380" height="76" rx="8" fill="#E8F1FF" stroke="#2F6FDE" stroke-width="2"/>
+  <text x="27" y="656">Redis lock: SET key value NX PX ttl, release via Lua.</text>
+  <text x="27" y="674">Redis gives no fencing token. An etcd revision or</text>
+  <text x="27" y="692">a ZooKeeper zxid can be the token.</text>
+  <rect x="405" y="634" width="380" height="76" rx="8" fill="#FFF3D6" stroke="#E0A100" stroke-width="2"/>
+  <text x="417" y="656">For correctness-critical work use a consensus store</text>
+  <text x="417" y="674">(etcd, ZooKeeper) or make the operation idempotent;</text>
+  <text x="417" y="692">use locks for efficiency only</text>
+</svg>

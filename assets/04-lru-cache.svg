@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 310" width="800" height="310" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1B1F24">
+  <title>LRU cache: hash map points to nodes of a doubly linked list ordered by recency</title>
+  <rect width="800" height="310" fill="#ffffff"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="28" font-size="16" font-weight="bold" text-anchor="middle">LRU cache = hash map + doubly linked list</text>
+
+  <text x="110" y="72" font-weight="bold" text-anchor="middle">Hash map</text>
+  <g stroke-width="2" text-anchor="middle">
+    <rect x="40" y="86" width="140" height="40" rx="6" fill="#E8F1FF" stroke="#2F6FDE"/><text x="110" y="111" stroke="none">key 3</text>
+    <rect x="40" y="136" width="140" height="40" rx="6" fill="#E8F1FF" stroke="#2F6FDE"/><text x="110" y="161" stroke="none">key 1</text>
+    <rect x="40" y="186" width="140" height="40" rx="6" fill="#E8F1FF" stroke="#2F6FDE"/><text x="110" y="211" stroke="none">key 2</text>
+  </g>
+
+  <text x="530" y="72" font-weight="bold" text-anchor="middle">Doubly linked list (order of use)</text>
+  <g stroke-width="2" text-anchor="middle">
+    <rect x="270" y="110" width="140" height="56" rx="6" fill="#E3F6E5" stroke="#2E9E44"/><text x="340" y="134" stroke="none">key 3</text><text x="340" y="153" stroke="none">most recent</text>
+    <rect x="450" y="110" width="140" height="56" rx="6" fill="#FFF3D6" stroke="#E0A100"/><text x="520" y="134" stroke="none">key 1</text><text x="520" y="153" stroke="none">middle</text>
+    <rect x="630" y="110" width="140" height="56" rx="6" fill="#FDE7E7" stroke="#D13B3B"/><text x="700" y="134" stroke="none">key 2</text><text x="700" y="153" stroke="none">least recent</text>
+  </g>
+
+  <g stroke="#555555" stroke-width="1.5" fill="none" marker-end="url(#a)">
+    <path d="M180 106 L268 128"/>
+    <path d="M180 156 L225 156 L225 190 L520 190 L520 168"/>
+    <path d="M180 206 L700 206 L700 168"/>
+    <line x1="412" y1="128" x2="448" y2="128"/>
+    <line x1="592" y1="128" x2="628" y2="128"/>
+    <line x1="448" y1="148" x2="412" y2="148"/>
+    <line x1="628" y1="148" x2="592" y2="148"/>
+  </g>
+
+  <text x="400" y="256" text-anchor="middle">Map: O(1) find of the node.  Get or Put: move the node to the front.</text>
+  <text x="400" y="280" text-anchor="middle">Over capacity: remove the back node and delete its key from the map.</text>
+</svg>
